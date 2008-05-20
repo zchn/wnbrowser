@@ -6,6 +6,7 @@
 
 class WordPool
 {
+
     WordPool();
 
     String GetSynonymy(String word,char attr);//nvad
