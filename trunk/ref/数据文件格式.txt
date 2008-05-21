@@ -1,0 +1,221 @@
+synset：同义词集，意思好像就是指由某个词的某个意思延伸出来的具有类似意思的词条集
+
+index文件格式：
+
+ lemma  pos  synset_cnt  p_cnt  [ptr_symbol...]  sense_cnt  tagsense_cnt   synset_offset  [synset_offset...]
+
+lemma
+	小写的ASCII编码格式的单词或短语（短语的单词之间用‘_’连接）
+    lower case ASCII text of word or collocation. Collocations are formed by joining individual words with an underscore (_ ) character. 
+pos
+	词条的词性标记
+    Syntactic category: n for noun files, v for verb files, a for adjective files, r for adverb files. 
+
+All remaining fields are with respect to senses of lemma in pos .
+
+synset_cnt
+	词条的意思的个数（即同义词集个数）
+    Number of synsets that lemma is in. This is the number of senses of the word in WordNet. See Sense Numbers below for a discussion of how sense numbers are assigned and the order of synset_offset s in the index files. 
+
+p_cnt
+	所有含该词条的同义词集中不同的指针个数，就是所谓的关系指针个数
+    Number of different pointers that lemma has in all synsets containing it. 
+
+ptr_symbol
+	p_cnt个关系指针标记符号
+    A space separated list of p_cnt different types of pointers that lemma has in all synsets containing it. See wninput(5WN) for a list of pointer_symbol s. If all senses of lemma have no pointers, this field is omitted and p_cnt is 0 . 
+
+sense_cnt
+	考虑兼容性所添加的意思个数，是多余的。貌似和上面的synset_cnt意义相同
+    Same as sense_cnt above. This is redundant, but the field was preserved for compatibility reasons. 
+
+tagsense_cnt
+	根据频率排序的词条意思个数
+    Number of senses of lemma that are ranked according to their frequency of occurrence in semantic concordance texts. 
+（这个我不太明白，可能和下面这段话有关
+Sense Numbers
+Senses in WordNet are generally ordered from most to least frequently used, with the most common sense numbered 1 . Frequency of use is determined by the number of times a sense is tagged in the various semantic concordance texts. Senses that are not semantically tagged follow the ordered senses. The tagsense_cnt field for each entry in the index.pos files indicates how many of the senses in the list have been tagged.
+
+The cntlist(5WN) file provided with the database lists the number of times each sense is tagged in the semantic concordances. The data from cntlist is used by grind(1WN) to order the senses of each word. When the index .pos files are generated, the synset_offset s are output in sense number order, with sense 1 first in the list. Senses with the same number of semantic tags are assigned unique but consecutive sense numbers. The WordNet OVERVIEW search displays all senses of the specified word, in all syntactic categories, and indicates which of the senses are represented in the semantically tagged texts.
+）
+
+synset_offset
+	对应data文件中该意思的数据首地址，共synset_cnt个（=sense_cnt，貌似）
+    Byte offset in data.pos file of a synset containing lemma . Each synset_offset in the list corresponds to a different sense of lemma in WordNet. synset_offset is an 8 digit, zero-filled decimal integer that can be used with fseek(3) to read a synset from the data file. When passed to read_synset(3WN) along with the syntactic category, a data structure containing the parsed synset is returned. 
+
+
+data文件格式：
+
+ synset_offset  lex_filenum  ss_type  w_cnt  word  lex_id  [word  lex_id...]  p_cnt  [ptr...]  [frames...]  |   gloss
+
+synset_offset
+	当前文件中的偏移地址
+    Current byte offset in the file represented as an 8 digit decimal integer. 
+
+lex_filenum
+	文件编号
+    Two digit decimal integer corresponding to the lexicographer file name containing the synset. See lexnames(5WN) for the list of filenames and their corresponding numbers. 
+（文件编号与文件名对应关系
+File Number   	Name   	Contents
+00 	adj.all 	all adjective clusters
+01 	adj.pert 	relational adjectives (pertainyms)
+02 	adv.all 	all adverbs
+03 	noun.Tops 	unique beginner for nouns
+04 	noun.act 	nouns denoting acts or actions
+05 	noun.animal 	nouns denoting animals
+06 	noun.artifact 	nouns denoting man-made objects
+07 	noun.attribute 	nouns denoting attributes of people and objects
+08 	noun.body 	nouns denoting body parts
+09 	noun.cognition 	nouns denoting cognitive processes and contents
+10 	noun.communication 	nouns denoting communicative processes and contents
+11 	noun.event 	nouns denoting natural events
+12 	noun.feeling 	nouns denoting feelings and emotions
+13 	noun.food 	nouns denoting foods and drinks
+14 	noun.group 	nouns denoting groupings of people or objects
+15 	noun.location 	nouns denoting spatial position
+16 	noun.motive 	nouns denoting goals
+17 	noun.object 	nouns denoting natural objects (not man-made)
+18 	noun.person 	nouns denoting people
+19 	noun.phenomenon 	nouns denoting natural phenomena
+20 	noun.plant 	nouns denoting plants
+21 	noun.possession 	nouns denoting possession and transfer of possession
+22 	noun.process 	nouns denoting natural processes
+23 	noun.quantity 	nouns denoting quantities and units of measure
+24 	noun.relation 	nouns denoting relations between people or things or ideas
+25 	noun.shape 	nouns denoting two and three dimensional shapes
+26 	noun.state 	nouns denoting stable states of affairs
+27 	noun.substance 	nouns denoting substances
+28 	noun.time 	nouns denoting time and temporal relations
+29 	verb.body 	verbs of grooming, dressing and bodily care
+30 	verb.change 	verbs of size, temperature change, intensifying, etc.
+31 	verb.cognition 	verbs of thinking, judging, analyzing, doubting
+32 	verb.communication 	verbs of telling, asking, ordering, singing
+33 	verb.competition 	verbs of fighting, athletic activities
+34 	verb.consumption 	verbs of eating and drinking
+35 	verb.contact 	verbs of touching, hitting, tying, digging
+36 	verb.creation 	verbs of sewing, baking, painting, performing
+37 	verb.emotion 	verbs of feeling
+38 	verb.motion 	verbs of walking, flying, swimming
+39 	verb.perception 	verbs of seeing, hearing, feeling
+40 	verb.possession 	verbs of buying, selling, owning
+41 	verb.social 	verbs of political and social activities and events
+42 	verb.stative 	verbs of being, having, spatial relations
+43 	verb.weather 	verbs of raining, snowing, thawing, thundering
+44 	adj.ppl 	participial adjectives
+）
+
+ss_type
+	词性标记
+    One character code indicating the synset type: 
+
+    n    NOUN
+    v    VERB
+    a    ADJECTIVE
+    s    ADJECTIVE SATELLITE
+    r    ADVERB
+
+w_cnt
+	该同义词集中词条个数（就是后面列表中意思相近的词条个数），也就是后面 word lex_id 的个数
+    Two digit hexadecimal integer indicating the number of words in the synset. 
+
+word
+	单词
+    ASCII form of a word as entered in the synset by the lexicographer, with spaces replaced by underscore characters (_ ). The text of the word is case sensitive, in contrast to its form in the corresponding index. pos file, that contains only lower-case forms. In data.adj , a word is followed by a syntactic marker if one was specified in the lexicographer file. A syntactic marker is appended, in parentheses, onto word without any intervening spaces. See wninput(5WN) for a list of the syntactic markers for adjectives. 
+
+lex_id
+	十六进制编码表示（没搞明白什么意思）
+    One digit hexadecimal integer that, when appended onto lemma , uniquely identifies a sense within a lexicographer file. lex_id numbers usually start with 0 , and are incremented as additional senses of the word are added to the same file, although there is no requirement that the numbers be consecutive or begin with 0 . Note that a value of 0 is the default, and therefore is not present in lexicographer files. 
+（
+The lex_id  is used to distinguish different senses of the same word within a lexicographer file. The lexicographer assigns lex_id  values, usually in ascending order, although there is no requirement that the numbers be consecutive. The default is 0 , and does not have to be specified. A lex_id  must be used on pointers if the desired sense has a non-zero lex_id  in its synset specification.
+）
+
+p_cnt
+	指向下一个同义词集的指针个数（不知道有什么用）
+    Three digit decimal integer indicating the number of pointers from this synset to other synsets. If p_cnt is 000 the synset has no pointers. 
+
+ptr
+	指向下一个同义词集的指针格式
+    A pointer from this synset to another. ptr is of the form: 
+	pointer_symbol	synset_offset				pos	source/target
+	关系标记	偏移地址（由词性确定的data文件中）	词性	两个两位的十六进制数（第一个：
+
+where synset_offset is the byte offset of the target synset in the data file corresponding to pos .
+
+The source/target field distinguishes lexical and semantic pointers. It is a four byte field, containing two two-digit hexadecimal integers. The first two digits indicates the word number in the current (source) synset, the last two digits indicate the word number in the target synset. A value of 0000 means that pointer_symbol represents a semantic relation between the current (source) synset and the target synset indicated by synset_offset .
+
+A lexical relation between two words in different synsets is represented by non-zero values in the source and target word numbers. The first and last two bytes of this field indicate the word numbers in the source and target synsets, respectively, between which the relation holds. Word numbers are assigned to the word fields in a synset, from left to right, beginning with 1 .
+
+See wninput(5WN) for a list of pointer_symbol s, and semantic and lexical pointer classifications.
+
+frames
+	data.verb文件中动词特有的（没搞明白是什么东西）
+    In data.verb only, a list of numbers corresponding to the generic verb sentence frames for word s in the synset. frames is of the form: 
+	f_cnt   +   f_num  w_num  [ +   f_num  w_num...]
+
+where f_cnt a two digit decimal integer indicating the number of generic frames listed, f_num is a two digit decimal integer frame number, and w_num is a two digit hexadecimal integer indicating the word in the synset that the frame applies to. As with pointers, if this number is 00 , f_num applies to all word s in the synset. If non-zero, it is applicable only to the word indicated. Word numbers are assigned as described for pointers. Each f_num  w_num pair is preceded by a + . See wninput(5WN) for the text of the generic sentence frames.
+
+gloss
+	注释，以‘|’开头
+    Each synset contains a gloss. A gloss is represented as a vertical bar (| ), followed by a text string that continues until the end of the line. The gloss may contain a definition, one or more example sentences, or both. 
+
+
+关系标记符
+
+ The pointer_symbol s for nouns are:
+
+    !    Antonym
+    @    Hypernym
+    @i    Instance Hypernym
+         Hyponym
+     i    Instance Hyponym
+    #m    Member holonym
+    #s    Substance holonym
+    #p    Part holonym
+    %m    Member meronym
+    %s    Substance meronym
+    %p    Part meronym
+    =    Attribute
+    +    Derivationally related form        
+    ;c    Domain of synset - TOPIC
+    -c    Member of this domain - TOPIC
+    ;r    Domain of synset - REGION
+    -r    Member of this domain - REGION
+    ;u    Domain of synset - USAGE
+    -u    Member of this domain - USAGE
+
+The pointer_symbol s for verbs are:
+
+    !    Antonym
+    @    Hypernym
+         Hyponym
+    *    Entailment
+    >    Cause
+    ^    Also see
+    $    Verb Group
+    +    Derivationally related form        
+    ;c    Domain of synset - TOPIC
+    ;r    Domain of synset - REGION
+    ;u    Domain of synset - USAGE
+
+The pointer_symbol s for adjectives are:
+
+    !    Antonym
+    &    Similar to
+    <    Participle of verb
+    \    Pertainym (pertains to noun)
+    =    Attribute
+    ^    Also see
+    ;c    Domain of synset - TOPIC
+    ;r    Domain of synset - REGION
+    ;u    Domain of synset - USAGE
+
+The pointer_symbol s for adverbs are:
+
+    !    Antonym
+    \    Derived from adjective
+    ;c    Domain of synset - TOPIC
+    ;r    Domain of synset - REGION
+    ;u    Domain of synset - USAGE 
+
+sentidx.vrb和sents.vrb中有例句（具体怎么用还没看懂）
+
