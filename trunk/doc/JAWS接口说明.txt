@@ -1,0 +1,98 @@
+1.开始必须 import edu.smu.tspell.wordnet.*; 。事实上平时常用的一些函数
+也基本在这个包里，注意在编译和运行的时候classpath中加上 jaws.jar，具体
+可以看源码目录中我写的那个Makefile和googlecode网站咱们的项目那一页的
+source目录下的changes（实际上是每次svn的提交注释）的r11。
+
+2.初始化方法:
+jaws启动时，会查询系统变量“wordnet.database.dir”，以便获得dict目录的位
+置，这个可以预先在我的电脑里设定classpath的地方设定，或者用java的-D选
+项在运行时临时设定，或者直接在程序中运行initial函数前设定，我选择了最
+后一种方案，因为这样污染最少，函数如下：
+        System.setProperty("wordnet.database.dir",
+                            "."
+                            + File.separator + "dict");
+
+然后再创建WordNetDatabase类并调用一个初始化的方法，即getFileinstance()，如下：
+
+        WordNetDatabase database = WordNetDatabase.getFileInstance();
+        
+
+        Synset[] nounFlies = database.getSynsets("fly", SynsetType.NOUN);
+
+        System.out.println(nounFlies[1].getDefinition());
+
+Package edu.smu.tspell.wordnet下的接口主要有下列几个：
+
+
+** Synset
+   一个词的所有相关信息的集合，按照词性（noun,verb...)分类，包括相应的
+   同义、反义、上下位、意思、用法等等，注意一个synset只对应一个词性。
+   其方法有：
+   ## getType
+      
+      public SynsetType getType()
+      
+      这个synset所对应的词性。
+        Type of synset this object represents.
+
+   ## getWordForms
+   
+      public String[] getWordForms()
+
+      返回所有的同义词。
+
+   ## getTagCount
+
+      public int getTagCount(String wordForm)
+
+      类似于相应同义词的相关度，实际上是用原词作为参数中的同义词的代用
+      词的频度作为衡量依据的，详情请参见英文文档。
+
+   ## getDefinition
+
+      public String getDefinition()
+
+      该词的简单意思。
+
+   ## getUsageExamples
+
+      public String[] getUsageExamples()
+
+      返回用法，可能返回空字符串组。
+      
+   注：由于只有同义词是各种词性共有的，所以获取上下位之类的函数都在相
+   应的词性继承类中。
+
+** AdjectiveSynset
+** AdverbSynset
+** NounSynset
+** VerbSynset
+   与某个词的形容词（副词、名词、动词）意思相对应的Synset。
+   获取上下位词等函数在其中。
+
+注：翻译是在是一个无聊的工作，而且这样一来我就把原来的文档的超链接破坏
+了，个人以为反而不易理解，所以我只详细翻译了上面这些，意在说明JAWS大概
+的框架，剩下的细节大家自己查文档里的超链接似乎更快，我把原文档放在了
+ref目录下了。
+
+
+** AdjectiveSatelliteSynset：
+   Represents an adjective satellite synset, that is one that is part of a cluster of similar adjects that are all associated with a single "head" synset.
+   ## 他本身有一个方法：public AdjectiveSynset getHeadSynset() throws
+   WordNetException 用来 Returns a reference to the head synset.
+
+ 
+Package edu.smu.tspell.wordnet下的类主要有下列几个：
+
+** SynsetType
+   表明了一个特定synset的词性(noun, verb, etc.) 。
+
+** WordNetDatabase
+   WordNet的文件数据库的类封装。
+
+** WordSense
+含有一些word form 和 synset，用来表明单词的意思。
+
+Package edu.smu.tspell.wordnet下的异常主要有下列几个：
+** WordNetException
+当访问文件数据库错误时会抛出此异常。
