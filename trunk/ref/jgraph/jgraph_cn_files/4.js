@@ -1,0 +1,18 @@
+document.writeln('<script type="text/JavaScript"> ');
+document.writeln('alimama_pid="mm_10559104_618217_1033421"; ');
+document.writeln('alimama_titlecolor="0000FF"; ');
+document.writeln('alimama_descolor ="000000"; ');
+document.writeln('alimama_bgcolor="FFFFFF"; ');
+document.writeln('alimama_bordercolor="E6E6E6"; ');
+document.writeln('alimama_linkcolor="008000"; ');
+document.writeln('alimama_bottomcolor="FFFFFF"; ');
+document.writeln('alimama_anglesize="0"; ');
+document.writeln('alimama_bgpic="0"; ');
+document.writeln('alimama_icon="0"; ');
+document.writeln('alimama_sizecode="36"; ');
+document.writeln('alimama_width=336; ');
+document.writeln('alimama_height=280; ');
+document.writeln('alimama_type=2; ');
+document.writeln('</script> ');
+document.writeln('<script src="http://a.alimama.cn/inf.js" type=text/javascript> ');
+document.writeln('</script>');

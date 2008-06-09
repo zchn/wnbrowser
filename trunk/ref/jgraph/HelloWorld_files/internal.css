@@ -1,0 +1,907 @@
+.WikiDisable { display: none; }
+.WikiPageMenuEntries img.WikiDisable { display: none; }
+
+.WikiHeaderNav { font-family: arial,helvetica,sans-serif; font-size: 12px; position: absolute; right: 0; top: 0; height: 20px; padding: 4px 8px 0 8px; margin: 0; text-align: center; text-decoration: none; line-height: 20px; }
+.WikiHeaderNav img, .WikiHeaderNav a img { vertical-align: top; border: 0; }
+
+/* Editor Styles */
+#editor_wrap { display: none; }
+.rteImg { width:23px; height:22px; margin: 2px; }
+.rteImgUp, .rteImg:hover { background:#CDDBF3; border:1px solid #6E9CE6 !important; width:23px; height:22px; margin:1px; }
+.rteImgDn, .rteImg:active { background:#C1D2EE; border:1px solid #316AC5 !important; width:23px; height:22px; margin:1px; }
+.rteSep { margin: 0 2px 0 2px; width: 1px; height: 20px; border: 0px }
+.rteBar { margin: 0 2px 0 4px; width: 3px; height: 15px; border: 0px }
+.rteBk { letter-spacing: 0; height: 24px; }
+.rteBk td { height: 24px; padding: 0; margin: 0; }
+.rteBk td.rteButton { background-color: #C1D2EE; }
+.rteIf { border-top: 2px solid #C1D2EE; }
+.show { left: auto; top: auto; position: relative }
+.hide { left: -1000px; top: -1000px; position: absolute }
+#changeMessageInputLabel, #tagInputLabel { font-weight: bold; color: #666; padding: 0 0 2px 0; margin: 0; font-size: 1.1em; }
+
+/* Hidden attribute tables */
+table.basic tr { vertical-align: top; }
+table.basic td { border: 0px !important; }
+table.basic .hideable { display: none; }
+table.basic td.hideable { width: 0px; } 
+table.advanced tr { vertical-align: top; }
+table.advanced td { border: 0px !important; }
+table.advanced table.hideable {display: table; }
+table.advanced tr.hideable { display: table-row; }
+table.advanced td.hideable { display: table-cell; }
+table.advanced .hideable { display: block; }
+
+/* Used in forms all over the place */
+.form { background-color: #EEE; padding: 8px; }
+.form h1 { font-weight: bold; color: #060; padding: 0 0 2px 0; margin: 0; font-size: 1.3em; }
+.form h2 { font-weight: bold; color: #060; padding: 0 0 2px 0; margin: 0; font-size: 1.1em; }
+.form h3 { font-weight: normal; color: #666; padding: 0 0 2px 0; margin: 0; font-size: 1.0em; }
+.form p { padding: 0 0 1em 0; margin: 0; }
+
+/* Page delete, rename, Space page, filedelete */
+.form#small { width: 308px; }
+.form#small input.lgtxt { font-size: 1.3em; font-weight: bold; width: 300px; font-family: verdana,sans-serif; }
+.form#small input.smtxt { width: 300px; }
+
+/* used in space sub and space permissions */
+.sub table { border-collapse: collapse; }
+.sub td { border: 1px solid #DDD; padding: 4px; text-align: center; }
+.sub { margin-bottom: 1em; }
+.sub .pay { background-color: #EEF; }
+.sub .current { background-color: #FFA; }
+.sub .disabled { background-color: #EEE; }
+
+/* used in join/create/signin components and index.html */
+div#signup { padding: 2px 12px; }
+div#signup h1 { color: #060; font-weight: bold; font-size: 1.5em; padding: 0; }
+div#signup h3 { color: #333; font-weight: bold; font-size: 1.0em; }
+div#signup input { font-size: 114%; font-weight: bold; margin: 2px; padding: 2px; }
+div#signup input.text { width: 202px; }
+div#signup input.default { font-weight: bold; }
+div#signup .right { text-align: right; }
+div#signup .left { text-align: left; }
+div#signup label { padding-top: 2px; vertical-align: top; }
+div#signup label.required { font-weight: bold; }
+
+/* ******************************** Rounded boxes *********************** */
+.WikispacesBox { background-color: #EEF; padding: 0; margin: 0; }
+.WikispacesBox p { padding: 4px 0 0 0 !important; margin: 0; }
+.WikispacesBox img { vertical-align: text-top; }
+.WikispacesBox .WikispacesBox_t { background: url(/i/bTRin.gif) no-repeat top right; height: 8px; }
+.WikispacesBox .WikispacesBox_b { background: url(/i/bBRin.gif) no-repeat top right; height: 8px; }
+.WikispacesBox img.WikispacesBox_c { width: 8px; height: 8px; border: none; display: block !important; }
+
+.WikispacesBoxSmall { padding: 0; margin: 0; }
+.WikispacesBoxSmall .WikispacesBox_t { background: url(/i/bTRins.gif) no-repeat top right; height: 2px; }
+.WikispacesBoxSmall .WikispacesBox_b { background: url(/i/bBRins.gif) no-repeat top right; height: 2px; }
+.WikispacesBoxSmall img.WikispacesBox_c { width: 2px; height: 2px; border: none; display: block !important; }
+
+.WikispacesBox .WikispacesBox_text, .WikispacesBoxSmall .WikispacesBox_text { padding: 0 8px; }
+.WikispacesBox .WikispacesBox_text td, .WikispacesBox .WikispacesBox_text td { border: 0 }
+.WikispacesBoxSmall .WikispacesBox_text td, .WikispacesBoxSmall .WikispacesBox_text td { border: 0 }
+
+.WikispacesBox_info { background: transparent url(/i/icon_16_info.gif) 8px 4px no-repeat; } 
+.WikispacesBox_info p { margin-left: 22px; }
+
+form .WikispacesBox { background-color: #DFF4CE; }
+
+/* TODO: remove these */
+#index_form50 { background-color: #DFF4CE; width: 50%; }
+#index_form75 { background-color: #DFF4CE; width: 75%; }
+#index_form300 { background-color: #DFF4CE; width: 300px; }
+#index_form400 { background-color: #DFF4CE; width: 400px; }
+
+/* used in themes */
+img.corner { width: 8px; height: 8px; border: none; display: block !important; } 
+
+/* ******************************** End rounded boxes *********************** */
+
+/* Used in search view */
+.WikiSearchResult { width: 90%; line-height: 130%; margin: 1em 0 .5em 0; }
+.WikiSearchResult .w_title { font-size: 125%; }
+.WikiSearchResult .w_url { color: #080; }
+.WikiSearchResult .w_body { margin: 2px 0; }
+.WikiSearchResult .w_foot { }
+
+/* Used in message view */
+.column50 { width: 47%; float: left; padding-right: 10px; }
+.column100 { width: 97%; padding-right: 10px; clear: both; }
+
+/* Highlighting with yellow background */
+.hl { background-color: #F6FFDD; }
+
+/* WikispacesSection headings and sections */
+.WikispacesSection h1 { color: #111; font-size: 1.5em !important; margin: 0.8em 0 0.3em 0; }
+.WikispacesSection h2 { color: #222; font-size: 1.3em !important; margin: 0.8em 0 0.3em 0; }
+.WikispacesSection h3 { color: #333; font-size: 1.2em !important; margin: 0.8em 0 0.3em 0; }
+.WikispacesSection .w_leader { margin-top: 0.3em; }
+.WikispacesSection .w_section { margin: 1.0em 0 0.3em 0; }
+.WikispacesSection .divider { height: 1px; width: 90%; margin: 1em auto; padding: 0; }
+.WikispacesSection .divider-bar { height: 1px; background-color: #CCC; width: 90%; margin: 2em auto; padding: 0; }
+.WikispacesSection ul.w_list { list-style: none; margin: 0; padding: 0 1em; line-height: 150%; }
+.WikispacesSection ul.w_list li { padding: 1px 0; }
+.WikispacesSection table.w_list td { padding: 0; line-height: 150%; }
+.WikispacesSection table.w_list td.label { text-align: left; padding: 0 1em; font-weight: bold; }
+.WikispacesSection .w_box { width: 320px; float: left; margin: 0 20px 0 10px; }
+.WikispacesSection .w_box.left { clear: both; }
+.WikispacesSection .w_box p { font-size: 1.2em; line-height: 1.4em; }
+
+/* WikispacesSection tables */
+.WikispacesSection table { border-collapse: collapse; padding: 0; margin: 0; }
+.WikispacesSection td, .WikispacesSection th { border: 1px solid #DDD; padding: 4px; margin: 0; }
+.WikispacesSection table.noborder td, .WikispacesSection table.noborder th { border: 0px; }
+.WikispacesSection th { color: #333; padding: 4px; margin: 0; text-align: center; white-space: nowrap; }
+.WikispacesSection th a.w_sort { color: #333; text-decoration: none; display: block; }
+.WikispacesSection th a.w_sort:hover { color: blue; text-decoration: underline; }
+.WikispacesSection th a.w_sort img { vertical-align: text-top; }
+.WikispacesSection thead th { background:url(/i/gradient_grey.gif) top left repeat-x #FFF; }
+.WikispacesSection tfoot th { background-color: #EEE; }
+.WikispacesSection th.action { text-align: right; }
+.WikispacesSection th.left { text-align: left; }
+.WikispacesSection th.right { text-align: right; }
+.WikispacesSection td.label { font-weight: bold; padding: 4px .5em; text-align: right; white-space: nowrap; vertical-align: top; }
+.WikispacesSection td.center { text-align: center !important; }
+
+/* WikispacesSection forms */
+.WikispacesSection fieldset { border: 0; }
+.WikispacesSection fieldset ol { margin: 0; padding: 0; }
+.WikispacesSection fieldset li { list-style: none; padding: 5px; margin: 0; }
+.WikispacesSection fieldset.w_vertical label { display: block; font-size: 110%; margin-bottom: 2px; }
+.WikispacesSection fieldset.w_vertical .w_input { border-width: 1px; border-style: solid; border-color: #666 #CCC #CCC #666;padding: 4px; font-family: arial, helvetica, sans-serif; font-size: 100%; font-weight: normal; }
+.WikispacesSection legend { font-size: 140%; font-weight: bold; }
+.WikispacesSection input.w_default { font-weight: bold; }
+.WikispacesSection fieldset .w_required label { font-weight: bold; }
+.WikispacesSection fieldset .w_about { font-weight: normal; color: #666; font-size: 80%; margin: 2px 0 8px 0; }
+.WikispacesSection input.default { font-weight: bold; }
+
+/* WikispacesSection overrides for inline image popup */
+#imageDiv p { padding: 0; margin: 0 0 4px 0; }
+#imageDiv form { padding: 0; margin: 0; }
+img.draggableImage { border: 1px solid #000; }
+#imageTable td { font-size: 10px; margin: 0px; padding: 0px; border: none; }
+#imageTable { margin-top: 4px; }
+#imageJump td { font-size: 11px; border: none; }
+
+/* Used in user view to show tag and star lists */
+.nopadul { padding: 0; margin: 0 0 0 15px; list-style-type: square; }
+
+/* Misc stuff used all over */
+.nowrap { white-space: nowrap; }
+.hidden { display: none; }
+tr td .sm { font-size: 90%; }
+.grey { color: #666; }
+.smgrey { color: #666; font-size: 80%; }
+.grey a { color: #666; }
+.textentry { font-family: arial, helvetica, sans-serif; border: 1px solid #999; }
+.nopad { padding: 0; margin: 0; }
+.bblack { color: #000; font-weight: bold; font-size: 1.1em; }
+.bgreen { color: #060; font-weight: bold; font-size: 1.1em; }
+
+/* TODO: these don't make sense as styles, fix them */
+.column33 { width: 31%; float: left; padding-right: 10px; }
+.column40 { width: 37%; float: left; padding-right: 10px; }
+.column60 { width: 57%; float: left; padding-right: 10px; }
+.column66 { width: 64%; float: left; padding-right: 10px; }
+
+.wheel { border: thin black solid; margin: 0px; padding: 0px;}
+
+/* Used in userlinks, which can appear inside and out of wikitext */
+.membersnapnote { white-space: nowrap; padding: 2px 4px 3px 4px; }
+.membersnap { white-space: nowrap; background: #FFD; padding: 2px 4px 3px 4px; color: #999; }
+.membersnap b { color: #000; }
+
+/* IE6 min-height: http://www.dustindiaz.com/min-height-fast-hack */ 
+#content_view { display: block; padding-bottom: 2em; width: 100%; float: left; min-height: 600px; height: auto !important; height: 600px; }
+
+.contentBox { font-family: arial,helvetica,sans-serif; position: relative; min-height: 600px; height: auto !important; height: 600px; }
+.contentBox img { border: 0; }
+.contentBox h1 { font-weight: bold; font-size: 1.5em; }
+.contentBox h2 { font-weight: bold; font-size: 1.2em; }
+.contentBox h3 { font-weight: bold; font-size: 1.1em; }
+.contentBox input.default { font-weight: bold; }
+
+.WikiLogoName a { text-decoration: none; font-weight: bold; }
+
+.h2front { color: #600; font-weight: bold; padding-top: 1em; margin: 0; font-size: 1.2em; }
+
+#concurrentEditor { padding: 5px; }
+#concurrentEditor h1 { font-size: 83%; font-weight: bold; padding: 0; margin: 0; }
+#concurrentEditor ul { list-style-type: none; padding: 0; margin: 4px 0; }
+#concurrentEditor li { padding: 2px 0 0 16px; margin: 0; }
+
+.callout_small { cursor: pointer; padding: 2px 20px 2px 2px; line-height: 200%; }
+.callout_small a { font-weight: bold; }
+.callout_large { cursor: pointer; width: 200px; margin: 0 20px 0 0; position: relative; }
+.callout_large .WikispacesBox_text { margin-right: 40px; }
+.callout_large a { font-weight: bold; }
+
+/* discussion area */
+
+table#WikiMessageSearch { border-collapse: collapse;  padding: 0; margin: 0; }
+table#WikiMessageSearch td { padding: 4px; }
+
+table#WikiMessageThread { border-collapse: collapse; padding: 0; margin: 0; width: 90%; }
+table#WikiMessageThread td { padding: 2px; }
+table#WikiMessageThread td.w_userpic { vertical-align: top; width: 88px; }
+table#WikiMessageThread td.w_userpic a img { border: 1px black solid; }
+table#WikiMessageThread td.w_body { padding-bottom: 20px; }
+table#WikiMessageThread td.w_pager { text-align: center; font-size: 90%; }
+
+table#WikiMessageList { border-collapse: collapse; padding: 0; margin: 0 0 20px 0; width: 90%; }
+table#WikiMessageList td { padding: 2px; }
+table#WikiMessageList tr.w_row { background-color: #FFF; }
+table#WikiMessageList tr.w_altrow { background-color: #EEE; }
+table#WikiMessageList td.w_subject { white-space: nowrap; }
+table#WikiMessageList td.w_username { white-space: nowrap; }
+table#WikiMessageList td.w_replies { text-align: center; }
+table#WikiMessageList td.w_views { text-align: center; }
+table#WikiMessageList td.w_lastmessage { white-space: nowrap; }
+table#WikiMessageList td.w_pager { text-align: center; font-size: 90%; }
+
+#mediaDiv { margin: 0; padding: 0; }
+#mediaDiv p { margin-top: 0; padding-top: 0; }
+#mediaDiv ul { list-style-type: none; white-space: nowrap; margin: 0; padding: 0; }
+#mediaDiv ul li { padding: 2px; }
+#mediaDiv ul img { border: none; vertical-align: top; }
+#mediaDiv ul a { text-decoration: none; }
+#mediaDiv table tr { vertical-align: top; }
+#mediaDiv table td { border: 0; margin: 0; padding: 0; }
+#mediaDiv .activeMediaMenuEntry { background-color: #FFFF00; }
+
+#mediaDiv table td#mediaMenu { background-color: #EEE; padding: 4px; }
+#mediaDiv table td#mediaContent { padding: 4px 4px 4px 12px; }
+#mediaPreviewDiv { min-height: 100px; }
+#mediaPreviewDiv form { text-align: center; }
+
+#spinnerMediaMenu { text-align: center; }
+
+#mediaContent div.mediaInstructions { max-height: 380px; overflow-y: auto; overflow-x: hidden; margin-bottom: 5px; min-width: 400px; }
+#mediaContent ul { margin:0px; padding:0px; list-style-type: none;}
+#mediaContent li { margin: 0; padding: 0; }
+#mediaContent ul a:link, #mediaContent ul a:visited { display: block; padding: 5px; border: 1px solid #FFF; text-align: center; text-decoration: underline; }
+#mediaContent ul a:hover { background-color: #CCC; border: 1px solid #000; text-decoration: none; }
+#mediaContent a:hover { color: #000; }
+#mediaContent a img { border: thin black solid; }
+#mediaContent table { margin: 8px 0; }
+#mediaContent table td { padding: 2px 4px; }
+.mediaContentSpinner { width: 100%; vertical-align: middle; }
+.mediaInstructions img { border: thin dotted #CCC; }
+#otherMediaForm { padding-top: 4px; }
+
+/* jqModal */
+.jqmWindow {
+  display: none;
+  position: absolute;
+  width: 876px;
+  height: 576px;
+  background-color: #FFF;
+  color: #222;
+  border: 1px solid black;
+}
+.jqmOverlayMacFF {background: url(/i/macFFBgHack.png) repeat;}
+.jqmOverlay { background-color: #666; }
+.jqmTransfer { border: 1px solid #000; z-index: 9000; background-color: #FFF; }
+
+/* Help Popup  */
+#WikispacesGettingStartedContent { width: 876px; height: 476px; }
+#WikispacesGettingStartedContent h1 { margin-top: 0; padding-top: 0; font-size: 20px; }
+#WikispacesGettingStartedContent h2 { margin-top: 0; padding-top: 0; font-size: 18px; }
+#WikispacesGettingStartedContent .w_gs { clear: right; font-size: 14px; }
+#WikispacesGettingStartedContent .w_gs .image img { border: 2px solid #AAA; display: block; margin: 0 auto; }
+#WikispacesGettingStartedContent .w_gs .content img { vertical-align: text-bottom; }
+#WikispacesGettingStartedContent .w_gs div.image { float: right; margin: 10px 0 0 20px; padding: 20px; background-image: url(/i/stripe.png); background-repeat: repeat; width: 519px; }
+#WikispacesGettingStartedContent .w_gs div.content { margin: 0; }
+#WikispacesGettingStartedContent .w_gs li { margin-bottom: 4px; }
+
+#WikispacesGettingStartedNav { clear: both; width: 856px; height: 80px; margin: 0 auto; background-color: #FFF; padding: 10px; top: 17%; }
+#WikispacesGettingStartedNav div { float: left; margin: 10px; padding: 10px; text-align: center; font-size: 24px; border: 1px solid #666; color: #666; cursor: pointer; }
+#WikispacesGettingStartedNav div.navhl { color: #000; background-color: #FFA; font-weight: bold; }
+#WikispacesGettingStartedNav div.num { width: 20px; }
+
+.tagcloud a { text-decoration: none; line-height: 20pt; }
+.tagcloud a:hover { text-decoration: underline; }
+
+.tagcloud_1 {
+  opacity: .5;
+  font-size: 10pt;
+}
+
+.tagcloud_2 {
+  opacity: .5;
+  font-size: 12pt;
+}
+
+.tagcloud_3 {
+  font-weight: bold;
+  opacity: .7;
+  font-size: 14pt;
+}
+
+.tagcloud_4 {
+  font-weight: bold;
+  opacity: .8;
+  font-size: 18pt;
+}
+
+.tagcloud_5 {
+  font-weight: bold;
+  opacity: 1.0;
+  font-size: 20pt;    
+}
+
+.ac_results {
+  padding: 0px;
+  border: 1px solid WindowFrame;
+  background-color: Window;
+  overflow: hidden;
+  z-index: 200000000;
+}
+
+.ac_results ul {
+  width: 100%;
+  list-style-position: outside;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ac_results iframe {
+  display: none;/*sorry for IE5*/
+  display/**/:block;/*sorry for IE5*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: mask();
+  width: 3000px;
+  height: 3000px;
+}
+
+.ac_results li {
+  margin: 0px;
+  padding: 2px 5px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  font: menu; /* TODO */
+  font-size: 12px;
+  overflow: hidden;
+}
+
+.ac_loading {
+  background: Window url('/i/spinner.gif') right center no-repeat; /* TODO */
+}
+
+.ac_over {
+  background-color: #EDD778;
+}
+
+img.autocompleteStatusImage {
+  border: 0 !important;
+}
+
+.autocompleteSupplemental {
+  font-size: .8em; 
+  font-style: italic;
+}
+
+.userMenu { position: absolute; z-index:100; border: thin #CCC solid; background: #FFF; width: 300px; padding: 8px; }
+
+/* windows_js 1.3 default */
+
+.overlay_dialog {
+	background-color: #666666;
+	filter:alpha(opacity=60);
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+}
+
+.overlay___invisible__ {
+  background-color: #666666;
+	filter:alpha(opacity=0);
+	-moz-opacity: 0;
+	opacity: 0;
+}
+
+.dialog_nw {
+	width: 9px;
+	height: 23px;
+	background: transparent url(/i/w/top_left.gif) no-repeat 0 0;		
+}
+
+.dialog_n {
+	background: transparent url(/i/w/top_mid.gif) repeat-x 0 0;	
+	height: 23px;
+}
+
+.dialog_ne {
+	width: 9px;
+	height: 23px;
+	background: transparent url(/i/w/top_right.gif) no-repeat 0 0;		
+}
+
+.dialog_e {
+	width: 2px;
+	background: transparent url(/i/w/center_right.gif) repeat-y 0 0;	
+}
+
+.dialog_w {
+	width: 2px;
+	background: transparent url(/i/w/center_left.gif) repeat-y 0 0;		
+}
+
+.dialog_sw {
+	width: 9px;
+	height: 19px;
+	background: transparent url(/i/w/bottom_left.gif) no-repeat 0 0;			
+}
+
+.dialog_s {
+	background: transparent url(/i/w/bottom_mid.gif) repeat-x 0 0;		
+	height: 19px;
+}
+
+.dialog_se {
+	width: 9px;
+	height: 19px;
+	background: transparent url(/i/w/bottom_right.gif) no-repeat 0 0;			
+}
+
+.dialog_sizer {
+	width: 9px;
+	height: 19px;
+	background: transparent url(/i/w/sizer.gif) no-repeat 0 0;	
+	cursor:se-resize;	
+}
+
+.dialog_close {
+	width: 14px;
+	height: 14px;
+	background: transparent url(/i/w/close.gif) no-repeat 0 0;			
+	position:absolute;
+	top:5px;
+	left:8px;
+	cursor:pointer;
+	z-index:2000;
+}
+
+.dialog_minimize {
+	width: 14px;
+	height: 15px;
+	background: transparent url(/i/w/minimize.gif) no-repeat 0 0;			
+	position:absolute;
+	top:5px;
+	left:28px;
+	cursor:pointer;
+	z-index:2000;
+}
+
+.dialog_maximize {
+	width: 14px;
+	height: 15px;
+	background: transparent url(/i/w/maximize.gif) no-repeat 0 0;			
+	position:absolute;
+	top:5px;
+	left:49px;
+	cursor:pointer;
+	z-index:2000;
+}
+
+.dialog_title {
+	float:left;
+	height:14px;
+	font-family: Tahoma, Arial, sans-serif;
+	font-size:12px;
+	text-align:center;
+	width:100%;
+	color:#000;
+}
+
+.dialog_content {
+	overflow:auto;
+	color: #DDD;
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 10px;
+	background-color:#123;
+}
+
+.top_draggable, .bottom_draggable {
+  cursor:move;
+}
+
+.status_bar {
+  font-size:12px;
+}
+.status_bar input{
+  font-size:12px;
+}
+
+.wired_frame {
+  display: block;
+  position: absolute;
+  border: 1px #000 dashed;
+}
+
+/* DO NOT CHANGE THESE VALUES*/
+.dialog {
+	display: block;
+	position: absolute;
+}
+
+.dialog table.table_window  { 
+  border-collapse: collapse; 
+  border-spacing: 0; 
+  width: 100%;
+  margin: 0px;
+  padding:0px;
+}
+
+.dialog table.table_window td , .dialog table.table_window th { 
+  padding: 0; 
+}
+
+.dialog .title_window {
+  -moz-user-select:none;
+}                                                    
+
+/* windows js 1.3 wikispaces */
+
+.overlay_wikispaces {
+  background-color: #AAA;
+  filter:alpha(opacity=60);
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+}
+
+.wikispaces_nw {
+  background: transparent url(/i/w/TL.png) no-repeat 0 0;
+  width:24px;
+  height:30px;
+}
+
+.wikispaces_n {
+  background: transparent url(/i/w/T.png) repeat-x 0 0;
+  height:30px;
+}
+
+.wikispaces_ne {
+  background: transparent url(/i/w/TR.png) no-repeat 0 0;		
+  width:31px;
+  height:30px;
+}
+
+.wikispaces_w {
+  background: transparent url(/i/w/L.png) repeat-y top left;
+  width:16px;
+}
+
+.wikispaces_e {
+  background: transparent url(/i/w/R.png) repeat-y top right;
+  width:16px;
+}
+
+.wikispaces_sw {
+  background: transparent url(/i/w/BLs.png) no-repeat 0 0;
+  width:31px;
+  height:14px;
+}
+
+.wikispaces_s {
+  background: transparent url(/i/w/Bs.png) repeat-x 0 0;
+  height:14px;
+}
+
+.wikispaces_se, .wikispaces_sizer {
+  background: transparent url(/i/w/BRs.png) no-repeat 0 0;
+  width:31px;
+  height:14px;
+}
+
+.wikispaces_sizer {
+	cursor:se-resize;	
+}
+
+.wikispaces_close {
+	width: 19px;
+	height: 19px;
+	background: transparent url(/i/w/W_close.gif) no-repeat 0 0;			
+	position:absolute;
+        right: 20px;
+        top: 12px;
+	cursor:pointer;
+	z-index:1000;
+}
+
+.wikispaces_minimize {
+	width: 19px;
+	height: 19px;
+	background: transparent url(/i/w/W_minimize.gif) no-repeat 0 0;			
+	position:absolute;
+        right: 40px;
+        top: 12px;
+	cursor:pointer;
+	z-index:1000;
+}
+
+.wikispaces_maximize {
+	width: 19px;
+	height: 19px;
+	background: transparent url(/i/w/W_maximize.gif) no-repeat 0 0;			
+	position:absolute;
+	right: 40px ;
+	top: 0px ;
+	cursor:pointer;
+	z-index:1000;
+}
+
+.wikispaces_helptext {
+	position:absolute;
+	right: 50px ;
+	top: 12px ;
+	font-size: 10px ;
+}
+
+.wikispaces_title {
+	float:left;
+	height:14px;
+	font-size:12px;
+	text-align:center;
+	margin-top:8px;
+	width:100%;
+	color:#000;
+}
+
+.wikispaces_message {
+        text-align: center;
+}
+
+.wikispaces_buttons {
+        text-align: center;
+        margin: 10px;
+}
+
+.wikispaces_message h1 {
+	font-size:20px;
+	text-align:center;
+	color:#000;
+}
+
+.wikispaces_content {
+	overflow:auto;
+	color: #222;
+	font-family: Tahoma, Arial, sans-serif;
+	background:#FFF;
+}
+
+.wikispaces_p {
+        width: 400px;
+        margin: auto;
+}
+
+/* FOR IE */
+* html .wikispaces_nw {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/TL.png", sizingMethod="crop");
+}
+
+* html .wikispaces_n {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/T.png", sizingMethod="scale");
+}
+
+* html .wikispaces_ne {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/TR.png", sizingMethod="crop");
+}
+
+* html .wikispaces_w {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/L.png", sizingMethod="scale");
+}
+
+* html .wikispaces_e {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/R.png", sizingMethod="scale");
+}
+
+* html .wikispaces_sw {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/BLs.png", sizingMethod="crop");
+}
+
+* html .wikispaces_s {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/Bs.png", sizingMethod="scale");
+}
+
+* html .wikispaces_se {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/BRs.png", sizingMethod="crop");
+}
+
+* html .wikispaces_sizer {
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/i/w/BRs.png", sizingMethod="crop");
+}
+
+.farbtastic {
+  position: relative;
+}
+.farbtastic * {
+  position: absolute;
+  cursor: crosshair;
+}
+.farbtastic, .farbtastic .wheel {
+  width: 195px;
+  height: 195px;
+}
+.farbtastic .color, .farbtastic .overlay {
+  top: 47px;
+  left: 47px;
+  width: 101px;
+  height: 101px;
+}
+.farbtastic .wheel {
+  background: url(/s/js/lib/farbtastic/wheel.png) no-repeat;
+  width: 195px;
+  height: 195px;
+}
+.farbtastic .overlay {
+  background: url(/s/js/lib/farbtastic/mask.png) no-repeat;
+}
+.farbtastic .marker {
+  width: 17px;
+  height: 17px;
+  margin: -8px 0 0 -8px;
+  overflow: hidden; 
+  background: url(/s/js/lib/farbtastic/marker.png) no-repeat;
+}
+
+#tablePropertiesList {
+  border-left: 1px solid #CCC;
+  border-right: 1px solid #CCC;
+}
+
+#tablePropertiesList, #tablePropertiesList ul {
+  list-style-type:none;
+  margin: 0;
+  padding: 0;
+  width: 12em;
+}
+
+#tablePropertiesList li, #tablePropertiesList ul li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #CCC;
+}
+
+#tablePropertiesList a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+}
+
+#tablePropertiesList a:hover {
+  background-color: #999;
+}
+
+#tablePropertiesList li a {
+  background-color: #C1D2EE;
+  color: #000;
+  padding: 4px 8px;
+}
+
+#tablePropertiesList li.disabledMenu {
+  display: none;
+}
+
+#tablePropertiesList li a:hover {
+  background-color: #999;
+  color: #FFF;
+}
+
+#tablePropertiesList li ul li a {
+  background-color: #DDD;
+  padding-left: 16px;
+}
+
+#tablePropertiesList li ul li ul li a {
+  background-color: #FFF;
+  padding-left: 24px;
+}
+
+#WikispacesHelp {
+  padding-right: 0px; 
+  margin-right: 0px;
+}
+
+#WikispacesHelpControls, #WikispacesGettingStartedControls {
+  padding: 10px; 
+  background-color: #CCCCCC;
+  position: relative;
+} 
+
+.WikispacesHelpClose {
+  position: absolute; 
+  top: 10px; 
+  right: 10px;
+}
+
+.WikispacesHelpClose a img {
+  border: 0;
+}
+
+#WikispacesHelpContent, #WikispacesGettingStartedContent {
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  width: 866px; 
+  height: 530px; 
+  padding: 5px;
+}
+
+#WikispacesHelpBreadcrumbSpinner {
+  vertical-align: top; 
+}
+
+.WikispacesHelpBreadcrumbCurrent a {
+  font-weight: bold;
+}
+
+.WikispacesHelpPageUp {
+  position: absolute;
+  right: 20px;
+  top: 35px;
+}
+
+.WikispacesHelpPageDown {
+  position: absolute;
+  right: 20px;
+  bottom: 0px;
+}
+
+#openid_selector_button_container img {
+  vertical-align: middle;
+}
+
+.WikispacesButton a {
+  display: block;
+  margin: 1px auto;
+  padding: 8px 0;
+  font: normal 14px/1 sans-serif;
+  text-decoration: none;
+  color: #000;
+}
+
+.WikispacesButton button {
+  padding: 0;
+  margin: 0;
+  border: 0; 
+  font: normal 14px/1 sans-serif;
+  text-decoration: none;
+  color: #000;
+}
+
+.WikispacesButton.w_80 a { background: url("/i/button-80.gif") 0 0 no-repeat; width: 80px; }
+.WikispacesButton.w_80 button { background: url("/i/button-80.gif") 0 0 no-repeat; width: 80px; height: 30px; }
+.WikispacesButton.w_80 a:hover, .WikispacesButton.w_80 button:hover { background-position: -80px 0; }
+.WikispacesButton.w_80 a:active { background-position: -240px 0; }
+
+.WikispacesButton.w_100 a { background: url("/i/button-100.gif") 0 0 no-repeat; width: 100px; }
+.WikispacesButton.w_100 button { background: url("/i/button-100.gif") 0 0 no-repeat; width: 100px; height: 30px; }
+.WikispacesButton.w_100 a:hover, .WikispacesButton.w_100 button:hover { background-position: -100px 0; }
+.WikispacesButton.w_100 a:active { background-position: -300px 0; }
+
+
+.WikispacesButton.w_120 a { background: url("/i/button-120.gif") 0 0 no-repeat; width: 120px; }
+.WikispacesButton.w_120 button { background: url("/i/button-120.gif") 0 0 no-repeat; width: 120px; height: 30px; }
+.WikispacesButton.w_120 a:hover, .WikispacesButton.w_120 button:hover { background-position: -120px 0; }
+.WikispacesButton.w_120 a:active { background-position: -360px 0; }

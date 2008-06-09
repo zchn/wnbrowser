@@ -1,0 +1,42 @@
+/* The on menu located page edit button */
+.WikiPageMenuEditButton { width: 108px; height: 20px; font-size: 0px; color: white; text-decoration: none; background: url('/i/edit_small.gif'); display: block; float: left; margin: 13px 7px 0 0; }
+.WikiPageMenuEditButtonNoPermission { width: 108px; height: 20px; font-size: 0px; color: white; text-decoration: none; background: url('/i/edit_small_nopermission.gif'); display: block; float: left; margin: 13px 7px 0 0; }
+.WikiPageMenuEditButtonLocked { width: 108px; height: 20px; font-size: 0px; color: white; text-decoration: none; background: url('/i/edit_small_locked.gif'); display: block; float: left; margin: 13px 7px 0 0; }
+.WikiPageMenuEditButtonDisabled { width: 108px; height: 20px; font-size: 0px; color: white; text-decoration: none; background: url('/i/edit_small_disabled.gif'); display: block; float: left; margin: 13px 7px 0 0; }
+
+/* Page Menu components */
+.WikiPageMenuStar { margin-top: 10px; float: left; }
+.WikiPageMenuTitle { margin: 10px 8px 0 0; font-weight: normal; font-size: 20px; float: left; }
+
+.WikiPageMenuEntries img { display: inline; }
+.WikiPageMenuEntries ul { margin: 0; padding: 4px 10px; list-style: none; }
+.WikiPageMenuEntries ul li { float: left; background: url("/i/tab_1l.gif") no-repeat left top; margin: 5px 1px 0 1px; padding: 0 0 0 5px; position: relative; top: 1px; z-index: 2;}
+.WikiPageMenuEntries ul li a { float:left; display:block; background:url("/i/tab_1r.gif") no-repeat right top; padding: 5px 10px 5px 5px; }
+.WikiPageMenuEntries a:visited, .WikiPageMenuEntries a:link { color: #777; }
+/* IE5-Mac-Hack \*/
+.WikiPageMenuEntries a { float: none; }
+/* end IE5-Mac-Hack */
+.WikiPageMenuEntries ul .WikiPageMenuEntryOn { background-image:url("/i/tab_1l_on.gif"); }
+.WikiPageMenuEntries ul .WikiPageMenuEntryOff { border-bottom: 1px solid #DDD; }
+.WikiPageMenuEntries ul .WikiPageMenuEntryOn a { background-image: url("/i/tab_1r_on.gif"); padding-bottom: 5px; border-bottom: 1px solid #FFF; }
+.WikiPageMenuEntries ul .WikiPageMenuEntryOn a { color: #333; font-weight: bold; }
+
+.WikiPageSubMenuDisabled { display: none; }
+.WikiPageSubMenuEnabled { display: inline !important; }
+
+#WikiPageSubMenu { cursor: pointer;}
+#WikiPageSubMenu ul { z-index: 2; position: absolute; top: 26px; left: 0; list-style: none; width: 120px; background-color: #FFF; padding: 0; margin: 0; border-color: #DDD; border-style: solid; border-width: 1px 1px 0 1px; }
+#WikiPageSubMenu ul .WikiPageSubMenuEntry, #WikiPageSubMenu ul .WikiPageSubMenuEntryDisabled { width: 108px; background-image: none; padding: 4px 4px 4px 8px; border-bottom: 1px solid #DDD; margin: 0; float: left; background-color: #FFF; }
+#WikiPageSubMenu ul .WikiPageSubMenuEntry a { color: #000; font-weight: normal; background-image: none; padding: 0; border: 0; }
+#WikiPageSubMenu ul .WikiPageSubMenuEntryDisabled { color: #CCC; }
+#WikiPageSubMenu ul .WikiPageSubMenuEntry:hover { background-color: #EEE; }
+#WikiPageSubMenu ul .WikiPageSubMenuEntryDisabled:hover { background-color: #FFF; }
+#WikiPageSubMenuControl { padding-left: 5px; display: inline; }
+
+/* Notice and Banner styles */
+.WikiNotice { width: 95%; color: #833; background-color: #FFC; padding: 2px; margin: 1em auto .5em auto; background-image: url(/i/icon_16_error.gif); background-position: 8px 50%; background-repeat: no-repeat; border: 1px solid #B66; }
+.WikiNotice ul { list-style-type: none; font-weight: bold; margin: 0 0 0 32px; padding: 0; color: black !important; }
+.WikiNotice a { color: blue !important; }
+.WikiBanner { width: 95%; color: #000; background-color: #FFC; padding: 2px; margin: 1em auto .5em auto; text-align: center; background-image: url(/i/icon_16_info.gif); background-position: 8px 50%; background-repeat: no-repeat; border: 1px solid #888; }
+.WikiBanner ul { list-style-type: none; font-weight: bold; margin: 0 0 0 32px; padding: 0; color: black !important; }
+.WikiBanner a { color: blue !important; }
