@@ -1,0 +1,366 @@
+<html><head><title>jgraph开发经验谈 - Java编程</title>
+
+
+<meta name="Keywords" content="jgraph开发经验谈,编程教程,编程入门,编程网站">
+<meta name="Description" content="jgraph开发经验谈,编程网,为编程爱好者提供最新编程资料">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<style type="text/css">
+<!--
+.style1 {color: #0099cc}
+-->
+</style>
+<link href="jgraph_cn_files/DefaultSkin.css" rel="stylesheet" type="text/css"> <script language="JavaScript" type="text/JavaScript" src="jgraph_cn_files/menu.js"></script>
+<script type="text/javascript" language="JavaScript1.2" src="jgraph_cn_files/stm31.js"></script><style>
+.st_tbcss,.st_tdcss,.st_divcss,.st_ftcss{border:none;padding:0px;margin:0px;}
+</style><script language="JavaScript" type="text/JavaScript">
+//改变图片大小
+function resizepic(thispic)
+{
+if(thispic.width>700){thispic.height=thispic.height*700/thispic.width;thispic.width=700;} 
+}
+//无级缩放图片大小
+function bbimg(o)
+{
+  var zoom=parseInt(o.style.zoom, 10)||100;
+  zoom+=event.wheelDelta/12;
+  if (zoom>0) o.style.zoom=zoom+'%';
+  return false;
+}
+//双击鼠标滚动屏幕的代码
+var currentpos,timer;
+function initialize()
+{
+timer=setInterval ("scrollwindow ()",30);
+}
+function sc()
+{
+clearInterval(timer);
+}
+function scrollwindow()
+{
+currentpos=document.body.scrollTop;
+window.scroll(0,++currentpos);
+if (currentpos !=document.body.scrollTop)
+sc();
+}
+document.onmousedown=sc
+document.ondblclick=initialize
+
+//更改字体大小
+var status0='';
+var curfontsize=10;
+var curlineheight=18;
+function fontZoomA(){
+  if(curfontsize>8){
+    document.getElementById('fontzoom').style.fontSize=(--curfontsize)+'pt';
+	document.getElementById('fontzoom').style.lineHeight=(--curlineheight)+'pt';
+  }
+}
+function fontZoomB(){
+  if(curfontsize<64){
+    document.getElementById('fontzoom').style.fontSize=(++curfontsize)+'pt';
+	document.getElementById('fontzoom').style.lineHeight=(++curlineheight)+'pt';
+  }
+}
+</script></head><body oncontextmenu="return false" ondragstart="return false" onselectstart="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()"><font id="st_gl0"></font><font id="st_gl1"></font><font id="st_gl2"></font><font id="st_gl3"></font><font id="st_gl4"></font><font id="st_gl5"></font><font id="st_gl6"></font><font id="st_gl7"></font><font id="st_gl8"></font><font id="st_gl9"></font>
+
+
+<div id="menuDiv" style="z-index: 1000; visibility: hidden; width: 1px; position: absolute; height: 1px; background-color: rgb(156, 197, 248);">
+</div>
+<table align="center" background="jgraph_cn_files/top_bg.jpg" border="0" cellpadding="0" cellspacing="0" height="114" width="778">
+    <tbody><tr>
+      <td width="213"><a href="http://www.23book.net/" title="网络学院" target="_blank"><img src="jgraph_cn_files/logo.gif" border="0" height="114" width="213"></a></td>
+      <td>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody><tr>
+            <td colspan="2" align="right">
+              <table align="right" border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                  <td><a href="http://www.99inf.net/Announcelist.asp"><img src="jgraph_cn_files/Announce_01.jpg" alt="网站公告列表" border="0" height="25"></a></td>
+                  <td class="showa" background="jgraph_cn_files/Announce_02.jpg" width="280"><marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="1" scrolldelay="4" width="430" align="left"><p>&nbsp;&nbsp;没有公告</p>
+                  </marquee></td>
+                </tr>
+              </tbody></table>
+            </td>
+          </tr>
+          <tr>
+            <td height="80" width="83%"><script language="javascript" src="jgraph_cn_files/1.js"></script><a href="http://www.lunarpages.com/id/ysy72"><img src="jgraph_cn_files/08_lunarpages_468x60.gif" border="0"></a>
+</td>
+            <td width="17%">
+              <table background="jgraph_cn_files/topr.gif" border="0" cellpadding="0" cellspacing="0" height="89" width="94">
+                <tbody><tr>
+                  <td colspan="2" align="center">
+                    <table border="0" cellpadding="0" cellspacing="0" height="56" width="79">
+                      <tbody><tr>
+                        <td align="center" width="26"><img src="jgraph_cn_files/arrows.gif" height="13" width="13"></td>
+                        <td width="68"><a class="Bottom" href="javascript:window.external.addFavorite('http://www.23book.net','%E7%BD%91%E7%BB%9C%E5%AD%A6%E9%99%A2');">加入收藏</a></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><img src="jgraph_cn_files/arrows.gif" height="13" width="13"></td>
+                        <td><a class="Bottom" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.23book.net');" href="#">设为首页</a></td>
+                      </tr>
+                      <tr>
+                        <td align="center"><img src="jgraph_cn_files/arrows.gif" height="13" width="13"></td>
+                        <td><a class="Bottom" href="mailto:ysy.sh@163.com">联系站长</a></td>
+                      </tr>
+                    </tbody></table>
+                  </td>
+                </tr>
+              </tbody></table>
+            </td>
+          </tr>
+        </tbody></table>
+      </td>
+    </tr>
+</tbody></table>
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="778">
+    <tbody><tr>
+      <td class="menu_s" align="center">&nbsp;|&nbsp;<a class="Channel" href="http://www.99inf.net/Index.htm">网站首页</a>&nbsp;|&nbsp;<a class="Channel" href="http://www.99inf.net/DB/Index.htm" target="_self">数据库教程</a>&nbsp;|&nbsp;<a class="Channel" href="http://www.99inf.net/Program/Index.htm" target="_self">web编程</a>&nbsp;|&nbsp;<a class="Channel" href="http://www.99inf.net/Server/Index.htm" target="_self">服务器</a>&nbsp;|&nbsp;<a class="Channel2" href="http://www.99inf.net/SoftwareDev/Index.htm" target="_self">程序设计</a>&nbsp;|&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="top_nav_menu"><script language="JavaScript1.2" type="text/JavaScript" src="jgraph_cn_files/ShowClass_Menu.js"></script><div class="st_divcss" onmouseover="stppov(event,this,st_ms[0].ps[0]);" onmouseout="stppou(event,this,st_ms[0].ps[0]);" id="Stm0p0i" style="position: static; z-index: 1000; visibility: visible;"><table class="st_tbcss" id="Stm0p0iTB" style="border: 0px none rgb(0, 0, 0); background-color: transparent;" cellpadding="0" cellspacing="0"><tbody><tr><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i0" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i0e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[0]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[0]);" onclick="stitck(event,this,st_ms[0].ps[0].is[0]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i0eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i0eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i0eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i1" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i1e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[1]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[1]);" onclick="stitck(event,this,st_ms[0].ps[0].is[1]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i1eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i1eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i1eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">程序设计首页</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i2" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i2e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[2]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[2]);" onclick="stitck(event,this,st_ms[0].ps[0].is[2]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i2eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i2eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i2eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i3" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i3e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[3]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[3]);" onclick="stitck(event,this,st_ms[0].ps[0].is[3]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i3eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i3eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i3eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">C语言编程</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i4" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i4e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[4]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[4]);" onclick="stitck(event,this,st_ms[0].ps[0].is[4]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i4eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i4eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i4eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i5" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i5e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[5]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[5]);" onclick="stitck(event,this,st_ms[0].ps[0].is[5]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i5eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i5eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i5eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">VC编程</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i6" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i6e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[6]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[6]);" onclick="stitck(event,this,st_ms[0].ps[0].is[6]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i6eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i6eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i6eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i7" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i7e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[7]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[7]);" onclick="stitck(event,this,st_ms[0].ps[0].is[7]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i7eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i7eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i7eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">VB编程</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i8" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i8e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[8]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[8]);" onclick="stitck(event,this,st_ms[0].ps[0].is[8]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i8eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i8eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i8eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i9" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i9e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[9]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[9]);" onclick="stitck(event,this,st_ms[0].ps[0].is[9]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i9eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i9eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i9eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">Delphi编程</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i10" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i10e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[10]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[10]);" onclick="stitck(event,this,st_ms[0].ps[0].is[10]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i10eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i10eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i10eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i11" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i11e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[11]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[11]);" onclick="stitck(event,this,st_ms[0].ps[0].is[11]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i11eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i11eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i11eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">Java编程</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i12" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i12e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[12]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[12]);" onclick="stitck(event,this,st_ms[0].ps[0].is[12]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i12eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i12eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i12eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i13" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i13e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[13]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[13]);" onclick="stitck(event,this,st_ms[0].ps[0].is[13]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i13eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i13eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i13eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">PowerBuilder</font></td></tr></tbody></table></div></td><td class="st_tdcss" style="padding: 2px;" id="Stm0p0i14" nowrap="nowrap" valign="top"><div class="st_divcss" id="Stm0p0i14e" onmouseover="stitov(event,this,st_ms[0].ps[0].is[14]);" onmouseout="stitou(event,this,st_ms[0].ps[0].is[14]);" onclick="stitck(event,this,st_ms[0].ps[0].is[14]);" style="border: 0px none rgb(255, 255, 247); background-color: transparent; cursor: default;"><table class="st_tbcss" style="" id="Stm0p0i14eTB" title="" cellpadding="0" cellspacing="0" height="100%"><tbody><tr><td class="st_tdcss" style="padding: 2px; color: rgb(0, 0, 0);" id="Stm0p0i14eMTD" align="left" height="100%" nowrap="nowrap" valign="middle"><font class="st_ftcss" id="Stm0p0i14eTX" style="cursor: default; font-family: 宋体; font-style: normal; font-variant: normal; font-weight: normal; font-size: 9pt; line-height: normal; font-size-adjust: none; font-stretch: normal; text-decoration: none;">|</font></td></tr></tbody></table></div></td></tr></tbody></table></div>
+</td>
+    </tr>
+    <tr>
+      <td><img src="jgraph_cn_files/menu_bg2.jpg" height="7" width="778"></td>
+    </tr>
+    <tr>
+      <td background="jgraph_cn_files/addr.jpg" height="21">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody><tr>
+<td align="center" width="5%"><img src="jgraph_cn_files/arrows2.gif" height="17" width="16"></td>
+      <td width="95%">您现在的位置：&nbsp;<a class="LinkPath" href="http://www.23book.net/">网络学院</a>&nbsp;&gt;&gt;&nbsp;<a class="LinkPath" href="http://www.99inf.net/SoftwareDev/Index.htm">程序设计</a>&nbsp;&gt;&gt;&nbsp;<a class="LinkPath" href="http://www.99inf.net/SoftwareDev/Java/Index.htm">Java编程</a>&nbsp;&gt;&gt;&nbsp;文章正文</td>
+          </tr>
+        </tbody></table>
+      </td>
+    </tr>
+    <tr>
+      <td background="jgraph_cn_files/addr_line.jpg" height="4"></td>
+    </tr>
+  </tbody></table> 
+<!-- ********网页中部代码开始******** -->
+<!--文章显示代码开始-->
+  <table class="center_tdbgall" style="" align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+    <tbody><tr><td colspan="2" align="center"><script language="javascript" src="jgraph_cn_files/11.js"></script><script type="text/JavaScript"> 
+alimama_pid="mm_10559104_618217_1033843"; 
+alimama_titlecolor="0000FF"; 
+alimama_descolor ="000000"; 
+alimama_bgcolor="FFFFFF"; 
+alimama_bordercolor="E6E6E6";
+alimama_linkcolor="008000"; 
+alimama_bottomcolor="FFFFFF"; 
+alimama_anglesize="0"; 
+alimama_bgpic="0"; 
+alimama_icon="0"; 
+alimama_sizecode="14";
+alimama_width=728; 
+alimama_height=90; 
+alimama_type=2; 
+</script> 
+<script src="jgraph_cn_files/inf.js" type="text/javascript"> 
+</script><img src="http://z.alimama.com/alimamal.php?i=mm_10559104_618217_1033843&amp;u=http%3A%2F%2Fwww.99inf.net%2FSoftwareDev%2FJava%2F22621.htm&amp;w=728&amp;h=90&amp;re=1024x768&amp;sz=14&amp;r=http%3A%2F%2Fwww.google.cn%2Fsearch%3Faq%3Df%26complete%3D1%26hl%3Dzh-CN%26newwindow%3D1%26client%3Diceweasel-a%26rls%3Dorg.debian%253Aen-US%253Aunofficial%26q%3Djava%2Bjgraph%2B%25E6%2580%25BB%25E7%25BB%2593%26btnG%3DGoogle%2B%25E6%2590%259C%25E7%25B4%25A2%26meta%3D&amp;cg=cf5e2c8e996cc8ab5b29e8790cc478e6&amp;prp=67008458&amp;cas=prp&amp;cah=717&amp;caw=1024&amp;ccd=24&amp;ctz=8&amp;chl=1&amp;cja=1&amp;cpl=8&amp;cmm=101&amp;cf=9.0&amp;sx=0&amp;sy=0&amp;cbw=0&amp;cbh=0" name="alimamatmpf0.8949080841391219" id="alimamatmpf0.8949080841391219" style="border: 0px none ; margin: 0px; padding: 0px; width: 0px; height: 0px; vertical-align: baseline;" border="0"><iframe name="alimamaf0.8949080841391219" id="alimamaf0.8949080841391219" border="0" marginwidth="0" marginheight="0" style="width: 728px; height: 90px;" src="jgraph_cn_files/alimama.html" frameborder="0" scrolling="no"></iframe>
+</td></tr>
+    <tr>
+      <td colspan="2">
+        <table class="main_title_760" style="" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody><tr>
+            <td valign="center" width="4%">&nbsp;</td>
+            <td width="65%"><strong>jgraph开发经验谈</strong></td>
+            <td width="18%"><font color="#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#009999"></font></font></td>
+            <td align="right" width="13%"><font color="#ff0000">【字体：<a href="javascript:fontZoomA();"><font color="#ff0000">小</font></a> <a href="javascript:fontZoomB();"><font color="#ff0000">大</font></a>】</font></td>
+          </tr>
+        </tbody></table>
+      </td>
+    </tr>
+    <tr align="center" valign="center">
+      <td class="main_ArticleTitle" style="" colspan="2" height="50">jgraph开发经验谈</td>
+    </tr>
+    <tr align="center" valign="center">
+      <td class="main_ArticleSubheading" style="" colspan="2"></td>
+    </tr>
+    <tr align="center">
+      <td class="Article_tdbgall" colspan="2">作者：佚名&nbsp;&nbsp;&nbsp;&nbsp;文章来源：<a href="http://www.99inf.net/ShowCopyFrom.asp?ChannelID=1004&amp;SourceName=%B2%BB%CF%EA">不详</a>&nbsp;&nbsp;&nbsp;&nbsp;点击数：<script language="javascript" src="jgraph_cn_files/GetHits.html"></script>&nbsp;&nbsp;&nbsp;&nbsp;更新时间：2007-7-3&nbsp;&nbsp;&nbsp;&nbsp;<a title="收藏的网页将被永久地保存到新浪ViVi收藏夹http://vivi.sina.com.cn" href="javascript:d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(vivi=window.open('http://vivi.sina.com.cn/collect/icollect.php?pid=2008&title='+escape(d.title)+'&url='+escape(d.location.href)+'&desc='+escape(t),'vivi','scrollbars=no,width=480,height=480,left=75,top=20,status=no,resizable=yes'));vivi.focus();"><img src="jgraph_cn_files/vivi_coop1.gif" align="absmiddle" border="0"></a></td>
+    </tr>
+    <tr>
+      <td class="main_tdbg_760" id="fontzoom" style="" colspan="2" height="300" valign="top">
+        <table align="left" border="0" cellpadding="10" cellspacing="0">
+          <tbody><tr>
+            <td>
+            <!--插入广告JS代码--></td>
+          </tr>
+        </tbody></table>
+
+<div style="float: left;"><script language="javascript" src="jgraph_cn_files/4.js"></script><script type="text/JavaScript"> 
+alimama_pid="mm_10559104_618217_1033421"; 
+alimama_titlecolor="0000FF"; 
+alimama_descolor ="000000"; 
+alimama_bgcolor="FFFFFF"; 
+alimama_bordercolor="E6E6E6"; 
+alimama_linkcolor="008000"; 
+alimama_bottomcolor="FFFFFF"; 
+alimama_anglesize="0"; 
+alimama_bgpic="0"; 
+alimama_icon="0"; 
+alimama_sizecode="36"; 
+alimama_width=336; 
+alimama_height=280; 
+alimama_type=2; 
+</script> 
+<script src="jgraph_cn_files/inf.js" type="text/javascript"> 
+</script><img src="http://z.alimama.com/alimamal.php?i=mm_10559104_618217_1033421&amp;u=http%3A%2F%2Fwww.99inf.net%2FSoftwareDev%2FJava%2F22621.htm&amp;w=336&amp;h=280&amp;re=1024x768&amp;sz=36&amp;r=http%3A%2F%2Fwww.google.cn%2Fsearch%3Faq%3Df%26complete%3D1%26hl%3Dzh-CN%26newwindow%3D1%26client%3Diceweasel-a%26rls%3Dorg.debian%253Aen-US%253Aunofficial%26q%3Djava%2Bjgraph%2B%25E6%2580%25BB%25E7%25BB%2593%26btnG%3DGoogle%2B%25E6%2590%259C%25E7%25B4%25A2%26meta%3D&amp;cg=82738d4244bcd309329660fab1efd616&amp;prn=66020242&amp;cas=prn&amp;cah=717&amp;caw=1024&amp;ccd=24&amp;ctz=8&amp;chl=1&amp;cja=1&amp;cpl=8&amp;cmm=101&amp;cf=9.0&amp;sx=0&amp;sy=0&amp;cbw=0&amp;cbh=0" name="alimamatmpf0.06460538264856219" id="alimamatmpf0.06460538264856219" style="border: 0px none ; margin: 0px; padding: 0px; width: 0px; height: 0px; vertical-align: baseline;" border="0"><iframe name="alimamaf0.06460538264856219" id="alimamaf0.06460538264856219" border="0" marginwidth="0" marginheight="0" style="width: 336px; height: 280px;" src="jgraph_cn_files/alimama_002.html" frameborder="0" scrolling="no"></iframe>
+</div>
+<div style="clear: right;">
+
+				
+
+		
+
+
+
+		<h2>契子</h2><p style="border: 1px dotted ; background-color: rgb(224, 224, 224);">　　本来一直很少有机会接触swing或AWT的，只是最近公司要做一个工作流定制界面，所以才终于得偿所愿。<br><table align="left" border="0" cellpadding="0" cellspacing="0" width="160"><tbody><tr><td id="newbooks1"><font color="red"><b>正在装载数据……</b></font></td></tr></tbody></table>我知道，如果一切从底层做起的话，恐怕时间、精力都不允许，而现成的一些工作流产品又不能满足公司特定行业工作流的需求，所以只好找一个开源的中间件进行修改了。就这样，慢慢的认识了JGraph……<br>　　关于JGraph，open-open上是这样介绍的：JGraph，纯Java开发的图形组件,支持拖，放，缩放，合并等其它操作。它可以被结合到任何的Swing应用程序当中。<br>　　在JGraph的网站上可以看到，它分为Free、Pro和Layout Pro版本，作为广大的“劳苦民众”来说，当然首选Free版了，呵呵~~</p><h2>JGraph的画图机制</h2><p style="border: 1px dotted ; background-color: rgb(224, 224, 224);">　　参照了JGraph的example和源代码，发现：<br><br>　
+　JGraph将图元定义为一个一个的cell，每个cell可以是一个顶点（Vertex）、边（Edge）或者节点（Port）中的一种。顶点可以有
+邻接的顶点，他们通过边相联系，边联接的两个端点称为目标和源，每个目标或者源是一个节点。节点是顶点的孩子。每个cell都可以有自己的孩子。<br>　　每个cell的外观由相应的属性定义，属性序列是指一系列的键－值对，他们以Map形式组织，例如：<br><br>　　//定义Edge的外观<br>　　Map map = new Hashtable();<br>　　GraphConstants.setLineEnd(map, GraphConstants.ARROW_CLASSIC);<br>　　GraphConstants.setEndFill(map, true);<br>　　GraphConstants.setLabelAlongEdge(map, true);<br>　　getAttributes().applyMap(map);<br><br>而“画布”（类JGraph，不妨如此理解吧）也可以有自己的外观属性。例如：<br><br>　　//定义画布的属性<br>　　setBackground(Color.decode("#C0C0C0"));<br>　　setEditable(false);<br>　　setCloneable(false);<br>　　setInvokesStopCellEditing(true);<br>　　setJumpToDefaultPort(true);<br>　　setPortsVisible(false);<br>　　setGridEnabled(false);<br>　　setGridVisible(false);<br>　　setGridMode(JGraph.CROSS_GRID_MODE);<br>　　setGridColor(Color.decode("#808080"));<br>　　setGridSize(10);<br></p><h2>JGraph的扩展</h2><p style="border: 1px dotted ; background-color: rgb(224, 224, 224);">　　JGraph只是提供单纯的图形绘制功能，不包含实际的数据，所以要想办法把自己的数据“加”进去才行，这恐怕就得考虑扩展JGraph了。<br>　　顶点（Vertex）对应的类为org.jgraph.graph.DefaultGraphCell<br>　　边（Edge）对应的类为org.jgraph.graph.DefaultEdge<br>　　节点（Port）对应的类为org.jgraph.graph.DefaultPort<br>　
+　我们要做的，仅仅是分别继承相应的类，并把自己的数据对象放进去而已。当然，还可以改变相应的外观属性。不过如果你对绘图事件也感兴趣的话（呵呵，十有
+八九应该有用的），还要留意一下org.jgraph.graph.BasicMarqueeHandler和
+org.jgraph.graph.GraphUndoManager这两个类呢。BasicMarqueeHandler中包括了在画布上点击鼠标、增
+加连线、合并等等事件的处理，而GraphUndoManager则主管撤销、回复事件<br>　　如果仔细操作，你也许回发现，点击边（Edge）的端
+点进行移动的事件并不由GraphUndoManager来处理，这时候就要再关注一个类了：
+org.jgraph.graph.EdgeView.EdgeHandle，这是一个内部类，如果需要的话，自己重写一个类继承它吧。这样，大部分需要
+的事件都尽在自己的掌握中了<br>　　嘿嘿~~~~ </p><h2>总结</h2><p style="border: 1px dotted ; background-color: rgb(224, 224, 224);">　　其实也没什么好总结的，写本文也是犹豫再三才开键盘的，本来准备在上个月就写呢。一直拖到现在，因为觉得只是简单的应用而已，全是基本功，没有一点“高级”的“新意”，好像实在没什么好写的。<br>　　今天在BlogJava上看了一篇帖子，感触颇深，其中一句“整天口若悬河新技术，不如将经典的旧技术烂醉于心”，一语解开了困惑我很长时间的一个疑团！从基本功做起，不是高手，唯手熟而…… </p><h2>后记</h2><p style="border: 1px dotted ; background-color: rgb(224, 224, 224);">　　<span lang="zh-cn">如果<span style="background-color: rgb(224, 224, 224);">有朋友对类似的项目感兴趣，欢迎指点，共同研究讨论。</span></span></p></div>
+
+              <table align="center" bgcolor="#f0f0f0" border="1" cellpadding="2" cellspacing="0" width="100%">
+                <tbody><tr>
+                  <td align="center" width="19%"><img src="jgraph_cn_files/checkarticle.gif" align="absmiddle" height="15" width="15"> 站内文章搜索</td>
+                  <td align="center"><script language="JavaScript" type="text/JavaScript" src="jgraph_cn_files/ShowSearchForm.js"></script><table border="0" cellpadding="0" cellspacing="0"><form method="get" name="SearchForm" action="/SoftwareDev/Search.asp"></form><tbody><tr><td align="center" height="28"><select name="Field" size="1"><option value="Title" selected="selected">文章标题</option><option value="Content">文章内容</option><option value="Author">文章作者</option><option value="Inputer">录 入 者</option><option value="Keywords">关键字</option></select>&nbsp;<select name="ClassID"><option value="">所有栏目</option><option value="19">C语言编程</option><option value="20">VC编程</option><option value="21">VB编程</option><option value="22">Delphi编程</option><option value="23">Java编程</option><option value="24">PowerBuilder</option></select>&nbsp;<input name="keyword" size="20" value="关键字" maxlength="50" onfocus="this.select();" type="text">&nbsp;<input name="Submit" value=" 搜索 " type="submit"></td></tr></tbody></table></td><td align="right"> <a href="http://www.99inf.net/SoftwareDev/Search.asp"><u>高级搜索</u></a></td>
+                </tr>
+              </tbody></table>
+
+<script language="javascript" src="jgraph_cn_files/5.js"></script><p><a href="http://www.lunarpages.com/id/ysy72"><font color="#cc0000" size="4">本站强烈推荐最好的<b>国外虚拟主机</b>、<b>虚拟服务器</b>(VPS)lunarpages，性能稳定，价格便宜，国内外访问速度都很好，而且支持国内银行网上银行人民币支付！点击<u><b>这里</b></u>访问lunarpages!</font></a>
+<a href="http://www.lunarpages.com/id/ysy72"><img src="jgraph_cn_files/08_lunarpages_468x60.gif" border="0"></a></p><p></p><p>
+<script type="text/JavaScript"> 
+alimama_pid="mm_10559104_618217_1033520"; 
+alimama_titlecolor="0000FF"; 
+alimama_descolor ="000000"; 
+alimama_bgcolor="FFFFFF"; 
+alimama_bordercolor="E6E6E6"; 
+alimama_linkcolor="008000"; 
+alimama_bottomcolor="FFFFFF"; 
+alimama_anglesize="0"; 
+alimama_bgpic="0"; 
+alimama_icon="0"; 
+alimama_sizecode="11"; 
+alimama_width=760; 
+alimama_height=90; 
+alimama_type=2; 
+</script> 
+<script src="jgraph_cn_files/inf.js" type="text/javascript"> 
+</script><img src="http://z.alimama.com/alimamal.php?i=mm_10559104_618217_1033520&amp;u=http%3A%2F%2Fwww.99inf.net%2FSoftwareDev%2FJava%2F22621.htm&amp;w=760&amp;h=90&amp;re=1024x768&amp;sz=11&amp;r=http%3A%2F%2Fwww.google.cn%2Fsearch%3Faq%3Df%26complete%3D1%26hl%3Dzh-CN%26newwindow%3D1%26client%3Diceweasel-a%26rls%3Dorg.debian%253Aen-US%253Aunofficial%26q%3Djava%2Bjgraph%2B%25E6%2580%25BB%25E7%25BB%2593%26btnG%3DGoogle%2B%25E6%2590%259C%25E7%25B4%25A2%26meta%3D&amp;cg=292feed91c67c6bd161f6710345def88&amp;pro=66025932&amp;cas=pro&amp;cah=717&amp;caw=1024&amp;ccd=24&amp;ctz=8&amp;chl=1&amp;cja=1&amp;cpl=8&amp;cmm=101&amp;cf=9.0&amp;sx=0&amp;sy=0&amp;cbw=0&amp;cbh=0" name="alimamatmpf0.21276873301645338" id="alimamatmpf0.21276873301645338" style="border: 0px none ; margin: 0px; padding: 0px; width: 0px; height: 0px; vertical-align: baseline;" border="0"><iframe name="alimamaf0.21276873301645338" id="alimamaf0.21276873301645338" border="0" marginwidth="0" marginheight="0" style="width: 760px; height: 90px;" src="jgraph_cn_files/alimama_003.html" frameborder="0" scrolling="no"></iframe>
+
+      </p><center></center></td>
+    </tr>
+    <tr>
+      <td class="Article_tdbgall" colspan="2" align="right">文章录入：admin&nbsp;&nbsp;&nbsp;&nbsp;责任编辑：admin&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="5"></td>
+      <td width="752"><li>上一篇文章： <a class="LinkPrevArticle" href="http://www.99inf.net/SoftwareDev/Java/22620.htm" title="文章标题：java 范型编程的简单测试。
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-7-3 12:52:45">java&nbsp;范型编程的简单测试。</a></li><br><li>下一篇文章： <a class="LinkNextArticle" href="http://www.99inf.net/SoftwareDev/Java/22622.htm" title="文章标题：菜单设计（2）—midp2.0
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-7-3 12:52:46">菜单设计（2）—midp2.0</a></li></td>
+    </tr>
+    <tr class="Article_tdbgall" align="right">
+      <td colspan="2">【<a href="http://www.99inf.net/SoftwareDev/Comment.asp?ArticleID=22621" target="_blank">发表评论</a>】【<a href="http://www.99inf.net/User/User_Favorite.asp?Action=Add&amp;ChannelID=1004&amp;InfoID=22621" target="_blank">加入收藏</a>】【<a href="http://www.99inf.net/SoftwareDev/SendMail.asp?ArticleID=22621" target="_blank">告诉好友</a>】【<a href="http://www.99inf.net/SoftwareDev/Print.asp?ArticleID=22621" target="_blank">打印此文</a>】【<a href="javascript:window.close();">关闭窗口</a>】</td>
+    </tr>
+  </tbody></table>
+  <table class="center_tdbgall" align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+    <tbody><tr>
+      <td class="main_shadow"></td>
+    </tr>
+  </tbody></table>
+  <!--文章显示代码结束-->
+  <!--最新热点、最新推荐、相关文章代码开始-->
+  <table class="center_tdbgall" style="" align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+    <tbody><tr>
+      <td class="main_title_282" width="33%"><b>最新热点</b></td>
+      <td rowspan="2" width="5"></td>
+      <td class="main_title_282" width="33%"><b>最新推荐</b></td>
+      <td rowspan="2" width="5"></td>
+      <td class="main_title_282" width="33%"><b>相关文章</b></td>
+    </tr>
+    <tr>
+      <td class="main_tdbg_760" height="100" valign="top">
+      <script language="javascript" src="jgraph_cn_files/Article_Hot3.js"></script>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Delphi/53040.htm" title="Delphi 2007企业版安装指南" target="_blank">Delphi&nbsp;2007企业版安装指南</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/52729.htm" title="eclipse 插件与工具下载站点集合Eclipse插件网站" target="_blank">eclipse&nbsp;插件与工具下载站…</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/50951.htm" title="什么是UML?" target="_blank">什么是UML?</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/34673.htm" title="异常java.sql.sqlexception: io exception:the network adapter could not establish connection" target="_blank">异常java.sql.sqlexceptio…</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/22618.htm" title="sqlplus命令的使用大全" target="_blank">sqlplus命令的使用大全</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/VC/22528.htm" title="directx&nbsp;图形接口指南（1）" target="_blank">directx&nbsp;图形接口指南（1）</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/VB/12242.htm" title="js的字符串有关函数" target="_blank">js的字符串有关函数</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/VB/9415.htm" title="VB操作Excel" target="_blank">VB操作Excel</a><br></td>
+      <td class="main_tdbg_760" valign="top" width="33%">
+        &nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/14713.htm" title="用java实现web服务器" target="_blank">用java实现web服务器</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/14686.htm" title="用java快速开发linux gui应用" target="_blank">用java快速开发linux&nbsp;gu…</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/14647.htm" title="正则表达式分解siemens交换机巡检-------(1)" target="_blank">正则表达式分解siemens交…</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/14628.htm" title="[portal参考手册]目录" target="_blank">[portal参考手册]目录</a><br>&nbsp;<a class="" href="http://www.99inf.net/SoftwareDev/Java/14584.htm" title="jsp中调用oracle存储过程的小例子" target="_blank">jsp中调用oracle存储过程…</a><br>
+      </td>
+      <td class="main_tdbg_760" valign="top" width="33%"><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/Java/55148.htm" title="文章标题：page、request、session、application的作用范围
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:21:31">page、request、session、ap…</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/Java/55139.htm" title="文章标题：HashTable和HashMap； Vector和 ArrayList
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:21:16">HashTable和HashMap；&nbsp;Vecto…</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/Java/55138.htm" title="文章标题：关于java Applet
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:21:16">关于java&nbsp;Applet</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/Java/55107.htm" title="文章标题：jmf摄像头applet
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:20:28">jmf摄像头applet</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/Java/55100.htm" title="文章标题：一个关于Comparator的使用例子
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:20:23">一个关于Comparator的使用例…</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/Java/55089.htm" title="文章标题：JSP Tag Library
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:20:04">JSP&nbsp;Tag&nbsp;Library</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/Java/55084.htm" title="文章标题：struts异常_does not start with a / character
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:19:59">struts异常_does&nbsp;not&nbsp;start&nbsp;…</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/VC/55069.htm" title="文章标题：chapter one
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:18:10">chapter&nbsp;one</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/VC/55047.htm" title="文章标题：boost.array源码重列
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:17:37">boost.array源码重列</a></li><br><li><a class="LinkArticleCorrelative" href="http://www.99inf.net/SoftwareDev/VC/55036.htm" title="文章标题：sizeof 操作符及pragma内存对齐
+作&nbsp;&nbsp;&nbsp;&nbsp;者：佚名
+更新时间：2007-9-12 17:17:24">sizeof&nbsp;操作符及pragma内存对…</a></li><br></td>
+    </tr>
+  </tbody></table>
+  <table class="center_tdbgall" align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+    <tbody><tr>
+      <td class="main_shadow"></td>
+    </tr>
+  </tbody></table>
+  <!--最新热点、最新推荐、相关文章代码结束-->
+  <!--网友评论代码开始-->
+  <table class="center_tdbgall" style="" align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+    <tbody><tr class="main_title_760">
+      <td height="25">　　<strong>网友评论：</strong><span style="color: rgb(255, 0, 0);">（只显示最新10条。评论内容只代表网友观点，与本站立场无关！） </span></td>
+    </tr>
+    <tr>
+      <td class="main_tdbg_760">
+      <script language="javascript" src="jgraph_cn_files/Comment.html"></script></td>
+    </tr>
+  </tbody></table>
+  <table class="center_tdbgall" align="center" border="0" cellpadding="0" cellspacing="0" width="760">
+    <tbody><tr>
+      <td class="main_shadow"></td>
+    </tr>
+  </tbody></table>
+  <!--网友评论代码结束-->
+  <!-- ********网页中部代码结束******** -->
+  <!-- ********网页底部代码开始******** --><table align="center" border="0" cellpadding="0" cellspacing="0" width="778">
+    <tbody><tr>
+      <td class="menu_bottombg" align="center">| <a class="Bottom" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.23book.net');" href="#">设为首页</a> | <a class="Bottom" href="javascript:window.external.addFavorite('http://www.23book.net','%E7%BD%91%E7%BB%9C%E5%AD%A6%E9%99%A2');">加入收藏</a> | <a class="Bottom" href="mailto:ysy.sh@163.com">联系站长</a> | <a class="Bottom" href="http://www.99inf.net/FriendSite/Index.asp" target="_blank">友情链接</a> | <a class="Bottom" href="http://www.99inf.net/Copyright.asp" target="_blank">版权申明</a> | <a class="Bottom" href="http://www.99inf.net/Announcelist.asp" target="_blank">网站公告</a> | <a class="Bottom" href="http://www.99inf.net/SiteMap/Article1.htm" target="_blank">网站地图</a> |  <a class="Bottom" href="http://www.99inf.net/Admin/Admin_Index.asp" target="_blank">管理登录</a>&nbsp;|&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="bottom_bg" height="80">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="90%">
+          <tbody><tr>
+            <td><img src="jgraph_cn_files/bottom_left.gif" height="80" width="9"></td>
+            <td align="center" width="80%">网络学院&#169;2007 www.23book.net <br>为您提供web编程,vb编程,vc编程,服务器架设管理,数据库设计等方面的知识 <script language="javascript" src="jgraph_cn_files/click.html"></script><a href="http://count.51yes.com/index.aspx?id=234944810" target="_blank"><img src="jgraph_cn_files/count6.gif" alt="51YES网站统计系统" border="0" height="20" hspace="0" vspace="0" width="20"></a><iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" src="jgraph_cn_files/sa.asc" frameborder="0" height="0" scrolling="no" width="0"></iframe>
+<script src="jgraph_cn_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2276205-1";
+urchinTracker();
+</script> 站长：<a href="mailto:ysy.sh@163.com">David</a> </td>
+            <td align="right"><img src="jgraph_cn_files/bottom_r.gif" height="80" width="9"></td>
+          </tr>
+        </tbody></table>
+      </td>
+    </tr>
+  </tbody></table> 
+  <!-- ********网页底部代码结束******** --><noscript><IFRAME src='*' Width='0' Height='0'></IFRAME></noscript>
+</body></html>

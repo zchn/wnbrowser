@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd"><html><head><!--
+/* ==========================================
+ * JGraphT : a free Java graph-theory library
+ * ==========================================
+ *
+ * Project Info:  http://jgrapht.sourceforge.net/
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ *
+ * (C) Copyright 2003, by Barak Naveh and Contributors.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+ */
+/* ~~~~~~~~~~~~~~~~~~~
+ * visualizations.html
+ * ~~~~~~~~~~~~~~~~~~~
+ * (C) Copyright 2003, by Barak Naveh and Contributors.
+ *
+ * Original Author:  Barak Naveh
+ * Contributor(s):   -
+ *
+ * $Id: visualizations.html 546 2007-03-27 05:47:33Z perfecthash $
+ *
+ * Changes
+ * ~~~~~~~
+ * 03-Aug-2003 : Initial revision (BN);
+ * 
+ */
+-->
+
+
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Barak Naveh">
+  <meta name="keywords" content="JGraphT, Java graph library, graph theory, free, java, LGPL, open-source"><title>JGraphT visualization using JGraph</title>
+  
+  <link rel="stylesheet" type="text/css" href="visualizations_files/style.css"></head><body>
+<h1><font color="#cc3399">J</font>Graph<font color="#ffcc00">T</font>&nbsp;Visualizations<br>
+<font size="5">via JGraph</font></h1>
+
+
+<br>
+
+<h2>Demo Applet</h2>
+
+
+<p>The following applet shows how a JGraphT graph can be visualized using 
+<a href="http://www.jgraph.com/">JGraph</a>. Try to play and drag 
+around the vertices and edges to get the feel of it.</p>
+
+
+<p><font color="#7aa1e6" size="2">Note: Java 1.3 or above must be installed for 
+this applet to work correctly.</font></p>
+
+<br>
+
+
+<table style="border-collapse: collapse;" align="center" border="1" bordercolor="#7aa1e6">
+  <tbody><tr><td>
+	<applet code="visualizations_files/org.html" archive="visualizations_files/jgrapht-0.asc" height="330" width="550">
+		<param name="bgcolor" value="#ffffff">
+		
+  		Java 2 Standard Edition v 1.3 or above is required for this applet.<br>
+		Download it from <a href="http://java.sun.com/">http://java.sun.com</a>.
+  	</applet>
+  </td></tr>
+</tbody></table>
+<div style="text-align: center;">a JGraphT graph visualized using JGraph.</div>
+
+<p>&nbsp;</p>
+
+
+<h2>How it Works</h2>
+
+<p>It's very simple: the JGraphT library comes with an 
+adapter that makes JGraphT graphs compatible with JGraph. To visualize a JGraphT 
+graph you just need to initialize JGraph via that adapter. </p>
+
+<p>Example code:</p>
+
+<p>
+</p><pre><i><font color="#b22222">     // create a JGraphT graph</font></i>
+     ListenableGraph g = <b><font color="#a020f0">new</font></b> ListenableDirectedGraph( DefaultEdge.class );
+
+     <i><font color="#b22222">// create a visualization using JGraph, via the adapter</font></i>
+      JGraph jgraph = <b><font color="#a020f0">new</font></b> JGraph( <b><font color="#a020f0">new</font></b> JGraphModelAdapter( g ) );
+</pre>
+
+
+
+<p>Is that all?!&nbsp; Yes, that's all. Any modification now made to the graph <code>g</code> will 
+automatically be reflected by the JGraph component.</p>
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+
+<h2>Source Code of the Applet</h2>
+
+
+
+<p>The full source code of this demo is listed below and is also included in the 
+JGraphT distribution (<a href="http://sourceforge.net/project/showfiles.php?group_id=86459">download now</a>).<br>
+&nbsp;</p>
+
+
+
+<div align="center">
+  <center>
+
+
+
+<table style="border-collapse: collapse;" bgcolor="white" border="1" bordercolor="#7aa1e6" cellpadding="20" cellspacing="0">
+  <tbody><tr>
+    <td align="left">
+    
+<pre><b><font color="#a020f0">package</font></b> org.jgrapht.demo;
+
+<b><font color="#a020f0">import</font></b> java.awt.Color;
+<b><font color="#a020f0">import</font></b> java.awt.Dimension;
+<b><font color="#a020f0">import</font></b> java.awt.Rectangle;
+
+<b><font color="#a020f0">import</font></b> java.util.HashMap;
+<b><font color="#a020f0">import</font></b> java.util.Map;
+
+<b><font color="#a020f0">import</font></b> javax.swing.JApplet;
+<b><font color="#a020f0">import</font></b> javax.swing.JFrame;
+
+<b><font color="#a020f0">import</font></b> org.jgraph.JGraph;
+<b><font color="#a020f0">import</font></b> org.jgraph.graph.DefaultGraphCell;
+<b><font color="#a020f0">import</font></b> org.jgraph.graph.GraphConstants;
+
+<b><font color="#a020f0">import</font></b> org.jgrapht.ListenableGraph;
+<b><font color="#a020f0">import</font></b> org.jgrapht.ext.JGraphModelAdapter;
+<b><font color="#a020f0">import</font></b> org.jgrapht.graph.ListenableDirectedGraph;
+<b><font color="#a020f0">import</font></b> org.jgrapht.graph.DefaultEdge;
+
+<i><font color="#b22222">/**
+ * A demo applet that shows how to use JGraph to visualize JGraphT graphs.
+ *
+ * @author Barak Naveh
+ *
+ * @since Aug 3, 2003
+ */</font></i>
+<b><font color="#a020f0">public</font></b> <b><font color="#a020f0">class</font></b> JGraphAdapterDemo <b><font color="#a020f0">extends</font></b> JApplet {
+    <b><font color="#a020f0">private</font></b> <b><font color="#a020f0">static</font></b> <b><font color="#a020f0">final</font></b> Color     DEFAULT_BG_COLOR = Color.decode( <b><font color="#bc8f8f">"#FAFBFF"</font></b> );
+    <b><font color="#a020f0">private</font></b> <b><font color="#a020f0">static</font></b> <b><font color="#a020f0">final</font></b> Dimension DEFAULT_SIZE = <b><font color="#a020f0">new</font></b> Dimension( 530, 320 );
+
+    <i><font color="#b22222">// 
+</font></i>    <b><font color="#a020f0">private</font></b> JGraphModelAdapter m_jgAdapter;
+
+    <i><font color="#b22222">/**
+     * @see java.applet.Applet#init().
+     */</font></i>
+    <b><font color="#a020f0">public</font></b> <b><font color="#a020f0">void</font></b> init(  ) {
+        <i><font color="#b22222">// create a JGraphT graph
+</font></i>        ListenableGraph g = <b><font color="#a020f0">new</font></b> ListenableDirectedGraph( DefaultEdge.class );
+
+        <i><font color="#b22222">// create a visualization using JGraph, via an adapter
+</font></i>        m_jgAdapter = <b><font color="#a020f0">new</font></b> JGraphModelAdapter( g );
+
+        JGraph jgraph = <b><font color="#a020f0">new</font></b> JGraph( m_jgAdapter );
+
+        adjustDisplaySettings( jgraph );
+        getContentPane(  ).add( jgraph );
+        resize( DEFAULT_SIZE );
+
+        <i><font color="#b22222">// add some sample data (graph manipulated via JGraphT)
+</font></i>        g.addVertex( <b><font color="#bc8f8f">"v1"</font></b> );
+        g.addVertex( <b><font color="#bc8f8f">"v2"</font></b> );
+        g.addVertex( <b><font color="#bc8f8f">"v3"</font></b> );
+        g.addVertex( <b><font color="#bc8f8f">"v4"</font></b> );
+
+        g.addEdge( <b><font color="#bc8f8f">"v1"</font></b>, <b><font color="#bc8f8f">"v2"</font></b> );
+        g.addEdge( <b><font color="#bc8f8f">"v2"</font></b>, <b><font color="#bc8f8f">"v3"</font></b> );
+        g.addEdge( <b><font color="#bc8f8f">"v3"</font></b>, <b><font color="#bc8f8f">"v1"</font></b> );
+        g.addEdge( <b><font color="#bc8f8f">"v4"</font></b>, <b><font color="#bc8f8f">"v3"</font></b> );
+
+        <i><font color="#b22222">// position vertices nicely within JGraph component
+</font></i>        positionVertexAt( <b><font color="#bc8f8f">"v1"</font></b>, 130, 40 );
+        positionVertexAt( <b><font color="#bc8f8f">"v2"</font></b>, 60, 200 );
+        positionVertexAt( <b><font color="#bc8f8f">"v3"</font></b>, 310, 230 );
+        positionVertexAt( <b><font color="#bc8f8f">"v4"</font></b>, 380, 70 );
+
+        <i><font color="#b22222">// that's all there is to it!...
+</font></i>    }
+
+
+    <b><font color="#a020f0">private</font></b> <b><font color="#a020f0">void</font></b> adjustDisplaySettings( JGraph jg ) {
+        jg.setPreferredSize( DEFAULT_SIZE );
+
+        Color  c        = DEFAULT_BG_COLOR;
+        String colorStr = <b><font color="#a020f0">null</font></b>;
+
+        <b><font color="#a020f0">try</font></b> {
+            colorStr = getParameter( <b><font color="#bc8f8f">"bgcolor"</font></b> );
+        }
+         <b><font color="#a020f0">catch</font></b>( Exception e ) {}
+
+        <b><font color="#a020f0">if</font></b>( colorStr != <b><font color="#a020f0">null</font></b> ) {
+            c = Color.decode( colorStr );
+        }
+
+        jg.setBackground( c );
+    }
+
+
+    <b><font color="#a020f0">private</font></b> <b><font color="#a020f0">void</font></b> positionVertexAt( Object vertex, <b><font color="#a020f0">int</font></b> x, <b><font color="#a020f0">int</font></b> y ) {
+        DefaultGraphCell cell = m_jgAdapter.getVertexCell( vertex );
+        Map              attr = cell.getAttributes(  );
+        Rectangle        b    = GraphConstants.getBounds( attr );
+
+        GraphConstants.setBounds( attr, <b><font color="#a020f0">new</font></b> Rectangle( x, y, b.width, b.height ) );
+
+        Map cellAttr = <b><font color="#a020f0">new</font></b> HashMap(  );
+        cellAttr.put( cell, attr );
+        m_jgAdapter.edit( cellAttr );
+    }
+}</pre>
+    
+    </td>
+  </tr>
+</tbody></table>
+
+
+
+  </center>
+</div>
+
+
+
+<p>&nbsp;</p>
+
+<hr style="background-color: rgb(122, 161, 230); color: rgb(122, 161, 230);" noshade="noshade" size="2">
+<table style="border-collapse: collapse;" border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr>
+    <td align="left" width="10%"><a href="http://validator.w3.org/check/referer"><img src="visualizations_files/valid-html401.png" alt="Valid HTML 4.01!" border="0" height="31" width="88"></a></td>
+          
+    <td align="center" width="80%"><small>
+		  © Copyright 2003, by Barak Naveh and Contributors. All rights reserved.</small></td>
+	    
+	<td align="right" width="10%"><a href="http://sourceforge.net/"><img src="visualizations_files/sflogo.png" alt="SourceForge.net Logo" border="0" height="31" width="88"></a></td>
+  </tr>
+</tbody></table>
+<br>
+
+
+
+</body></html>

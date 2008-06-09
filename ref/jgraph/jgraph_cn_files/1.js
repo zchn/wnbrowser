@@ -1,0 +1,1 @@
+document.writeln('<a href="http://www.lunarpages.com/id/ysy72"><img border="0" src="/ad/uploadadpic/08_lunarpages_468x60.gif"></a>');
