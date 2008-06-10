@@ -80,7 +80,7 @@ public class ButtonMove
 {
 	public static void main(String args[])
 	{
-		WindowButton win = new WindowButton("´°¿Ú");
+		WindowButton win = new WindowButton("çª—å£");
 	}
 }
 

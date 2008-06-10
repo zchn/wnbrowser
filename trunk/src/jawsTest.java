@@ -15,7 +15,7 @@ public class jawsTest{
         
         Synset[] nounFlies = database.getSynsets("fly", SynsetType.NOUN);
 
-        System.out.println(nounFlies[1].getDefinition());
+        System.out.println(nounFlies[0].getDefinition());
     }
 		
 }
