@@ -11,10 +11,10 @@ Main.class:Main.java MainWindow.class
 	javac -cp "." Main.java
 
 MainWindow.class:MainWindow.java
-	javac -cp "./lib/jgraph.jar:./lib/jgrapht.jar" MainWindow.java
+	javac -cp "./lib/jaws.jar:./lib/jgraph.jar:./lib/jgrapht.jar" MainWindow.java
 
 run:
-	java -cp "./lib/jgraph.jar:./lib/jgrapht.jar:." Main
+	java -cp "./lib/jaws.jar:./lib/jgraph.jar:./lib/jgrapht.jar:." Main
 
 clean:
 	rm *.class
