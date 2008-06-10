@@ -28,12 +28,11 @@ public class MainWindow extends JFrame
     
     public MainWindow()
     {
-        Container winCon = getContentPane();
+
         InitWindowFrame();
-        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
         pack();
         validate();
-        setResizable(false);
         setVisible(true);
     }
             
@@ -77,6 +76,13 @@ public class MainWindow extends JFrame
                                    rightSplit);
         upSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                  pnlInput,
-                                 pnlProp);                                 
+                                 pnlProp);
+        baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                                   upSplit,
+                                   downSplit);
+        getContentPane().add(baseSplit);
+        
+        
+        
     }
 }       
