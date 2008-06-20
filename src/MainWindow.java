@@ -16,7 +16,7 @@ import edu.smu.tspell.wordnet.*;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.AttributeMap;
-    
+
 import org.jgrapht.ext.JGraphModelAdapter;
 import org.jgrapht.graph.ListenableDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -26,7 +26,7 @@ public class MainWindow extends JFrame
 {
     private static final int WORDWIDTH=30;
     private static final String WORDNET_DATABASE_DIR_TAG = "wordnet.database.dir";
-    
+ 
     JTextField txtWord;
     JButton btnSearch,btnNoun,btnVerb,btnAdj,btnAdv;
     JList lstMeanings,lstRelatedWords;
@@ -40,7 +40,7 @@ public class MainWindow extends JFrame
 
     public MainWindow(String name)
     {
-	super(name);
+    	super(name);
         InitWordnetDB();
         InitWindowFrame();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
@@ -108,8 +108,7 @@ public class MainWindow extends JFrame
         txaMeaning.validate();
     }
 
-    private void InitWindowFrame()
-        
+    private void InitWindowFrame() 
     {
         
         txtWord = new JTextField(WORDWIDTH);
@@ -162,9 +161,6 @@ public class MainWindow extends JFrame
                                    downSplit);
         baseSplit.setDividerSize(0);
         getContentPane().add(baseSplit);
-        
-        
-        
     }
-    
-}       
+
+} 
