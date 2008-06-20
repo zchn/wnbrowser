@@ -38,8 +38,9 @@ public class MainWindow extends JFrame
     SynsetType currProp;
     int currMeaningIdx;
 
-    public MainWindow()
+    public MainWindow(String name)
     {
+	super(name);
         InitWordnetDB();
         InitWindowFrame();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
