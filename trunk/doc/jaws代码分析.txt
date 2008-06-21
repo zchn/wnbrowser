@@ -1,0 +1,84 @@
+1、public abstract class WordNetDatabase内有类型为WordNetDatabase的变量
+fileInstance，fileInstance = new FileDataBase()。
+
+2、public class FileDatabase extends WordNetDatabase，构造函数什么也不做。
+getSynsets函数最终在这里定义：
+	public Synset[] getSynsets(String wordForm, SynsetType type,
+			boolean useMorphology) throws WordNetException
+	{
+		SynsetType[] typeArray = (type != null ?
+				new SynsetType[] {type} 
+                                : SynsetType.ALL_TYPES);
+
+		WordFormLookup factory = WordFormLookup.getInstance();
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		return factory.getSynsets(wordForm, typeArray,
+                useMorphology);
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                这两句是关键。
+	}
+。
+
+3、public class WordFormLookup中的一个函数：
+	public synchronized static WordFormLookup getInstance()
+	{
+		if (instance == null)
+		{～～～～～～～～～～～～～～～保证Instance只建立一次。
+			instance = new WordFormLookup();
+		}
+		return instance;
+	}
+        构造函数是空的。
+	private WordFormLookup()
+	{
+	}
+        下面解析WordFormLookup里的getSynset。
+
+4、public class WordFormLookup中的两个重要方法：
+	private Synset[] getSynsets(String wordForm, SynsetType type)
+	{
+                先从wordCategories里找。
+
+                如果未命中，则从文件里查（loadSynset函数将所有与这个词
+                相关的记录全部查出来），放入wordCategories。
+        }
+
+        private Map loadSynsets(String wordForm) throws WordNetException
+	{
+                按照单词读取索引文件
+		//  Read lines from the sense index that correspond to the word form
+		SenseIndexReader reader = SenseIndexReader.getInstance();
+		SenseIndexEntry[] indexEntries = reader.getLemmaEntries(wordForm);
+		Arrays.sort(indexEntries);
+                
+                按照读出的索引检索相应的文件里的内容
+		SynsetFactory factory = SynsetFactory.getInstance();
+		//  Loop through the list of index entries
+		for (int i = 0; i < indexEntries.length; i++)
+		{
+			synset = factory.getSynset(indexEntries[i].getSynsetPointer());
+			type = synset.getType();
+			//  Also add the new synset to our cache
+			categoryList = (List)(subMap.get(type));
+			//  If this is the first one, create a new list and store it
+			if (categoryList == null)
+			{
+				categoryList = new ArrayList();
+				subMap.put(type, categoryList);
+			}
+			//  Add current synset to the list for its type
+			categoryList.add(synset);
+		}
+		return subMap;
+	}
+
+
+5、public class SenseIndexReader extends MultipleLineLocator
+   public abstract class MultipleLineLocator extends LineLocator
+   public class LineLocator extends RandomAccessReader             
+   public abstract class RandomAccessReader
+
+6、public class SynsetFactory
+
+             按照读出的索引检索相应的文件里的内容
+		SynsetFactory factory = SynsetFactory.getInstance();
