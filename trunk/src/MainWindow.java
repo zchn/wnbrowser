@@ -533,8 +533,9 @@ public class MainWindow extends JFrame
         Synset nowSynset;
         nowSynset = currSynset[currMeaningIdx];
         WordSense[] wsAntonyms;
-        NounSynset[] nsHypernyms, nsHyponyms;
+        NounSynset[] nsHypernyms, nsHyponyms,nsAttributes;
         VerbSynset[] vsHypernyms;
+        
         currProp=nowSynset.getType();
         String[] strSynonymy;
         int centerY;
@@ -609,9 +610,12 @@ public class MainWindow extends JFrame
                         if(strSynonymy[i] == currWord){
                             continue;
                         }
-                        grptWordNet.addVertex(strSynonymy[i]);
-                        grptWordNet.addEdge(currWord,strSynonymy[i]);
-                        positionVertexAt(strSynonymy[i],200,100+i*20);
+                        String tmp = new String(strSynonymy[i]);                                
+                        grptWordNet.addVertex(tmp);
+                        graphVertices.add(tmp);
+                        grptWordNet.addEdge(currWord,tmp);
+                        setVertexColor(tmp,Color.red);
+                        positionVertexAt(tmp,200,100+i*20);
                     }
                 centerY = 100+i*20;
                 positionVertexAt(currWord,200,centerY);
@@ -625,9 +629,12 @@ public class MainWindow extends JFrame
                         temp = temp2.getWordForms();
                         for (j = 0; j < temp.length; j++)
                             {
-                                grptWordNet.addVertex(temp[j]);
-                                grptWordNet.addEdge(currWord,temp[j]);
-                                positionVertexAt(temp[j],200,centerY+50+j*20);
+                                String tmp = new String(temp[j]);                                
+                                grptWordNet.addVertex(tmp);
+                                graphVertices.add(tmp);
+                                grptWordNet.addEdge(currWord,tmp);
+                                setVertexColor(tmp,Color.yellow);                                
+                                positionVertexAt(tmp,200,centerY+50+j*20);
                             }
                     }
                 //hypernyms
@@ -638,13 +645,70 @@ public class MainWindow extends JFrame
                         temp = vsHypernyms[i].getWordForms();
                         for (j = 0; j < temp.length; j++)
                             {
-                                grptWordNet.addVertex(temp[j]);
-                                grptWordNet.addEdge(currWord,temp[j]);
-                                positionVertexAt(temp[j],50,centerY-100+j*20);
+                                String tmp = new String(temp[j]);
+                                grptWordNet.addVertex(tmp);
+                                graphVertices.add(tmp);                                
+                                grptWordNet.addEdge(currWord,tmp);
+                                setVertexColor(tmp,Color.blue);                                
+                                positionVertexAt(tmp,50,centerY-100+j*20);
                             }
                     }
             }
-        
+        else if (currProp == SynsetType.ADJECTIVE)
+                    {
+                        strSynonymy = nowSynset.getWordForms();
+                        //synonymy
+                        for (i = 0; i < strSynonymy.length; i++)
+                            {
+                                if(strSynonymy[i] == currWord){
+                                    continue;
+                                }
+                                String tmp = new String(strSynonymy[i]);                                
+                                grptWordNet.addVertex(tmp);
+                                graphVertices.add(tmp);
+                                grptWordNet.addEdge(currWord,tmp);
+                                setVertexColor(tmp,Color.red);
+                                positionVertexAt(tmp,200,100+i*20);
+                            }
+                        centerY = 100+i*20;
+                        //antonyms
+                        wsAntonyms = ((AdjectiveSynset)nowSynset).getAntonyms(currWord);
+                        Synset temp2;
+                        for (i = 0; i < wsAntonyms.length; i++)
+                            {
+                                temp2 = wsAntonyms[i].getSynset();
+                                String[] temp;
+                                temp = temp2.getWordForms();
+                                for (j = 0; j < temp.length; j++)
+                                    {
+                                        String tmp = new String(temp[j]);                                
+                                        grptWordNet.addVertex(tmp);
+                                        graphVertices.add(tmp);
+                                        grptWordNet.addEdge(currWord,tmp);
+                                        setVertexColor(tmp,Color.yellow); 
+                                        positionVertexAt(tmp,200,centerY+50+j*20);
+                                    }
+                            }
+                        //attributes
+                        nsAttributes = ((AdjectiveSynset)nowSynset).getAttributes();
+                        for (i = 0; i < nsAttributes.length; i++)
+                            {
+                                String[] temp;
+                                temp = nsAttributes[i].getWordForms();
+                                for (j = 0; j < temp.length; j++)
+                                    {
+                                        String tmp = new String(temp[j]);
+                                        grptWordNet.addVertex(tmp);
+                                        graphVertices.add(tmp);                                
+                                        grptWordNet.addEdge(currWord,tmp);
+                                        setVertexColor(tmp,Color.blue);                                
+                                        positionVertexAt(tmp,50,centerY-100+j*20);
+                                    }
+                            }
+                    }
+                if (currProp == SynsetType.ADVERB)
+                    {
+                    }        
         this.validate();
     }
 
