@@ -188,7 +188,7 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
 			currProp = nowSynset.getType();
 			String[] strSynonymy;
 			//make a JTree
-			root.setUserObject(currWord);
+			DefaultMutableTreeNode root = new DefaultMutableTreeNode(currWord);
 			root.removeAllChildren();
 			if (currProp == SynsetType.NOUN)
 			{
@@ -365,8 +365,28 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
 				root.add(antonyms);
 				root.add(pertainyms);
 			}
-			scroRelatedWords.validate();
-			scroRelatedWords.repaint();
+			tree = new JTree(root);
+			scroRelatedWords = new JScrollPane(tree);
+			leftSplit.removeAll();
+			leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+								   new JScrollPane(lstMeanings),
+								   scroRelatedWords);
+		
+			downSplit.removeAll();
+			downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+								   leftSplit,
+								   rightSplit);
+			
+
+			baseSplit.removeAll();
+			baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+									   upSplit,
+									   downSplit);
+			baseSplit.setDividerSize(0);
+			getContentPane().removeAll();
+			getContentPane().add(baseSplit);
+			baseSplit.validate();
+			getContentPane().validate();
 		}
 		catch (Exception e)
 		{
@@ -379,12 +399,15 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
 		int i;
 		String[] temp;
 		temp = currSynset[currMeaningIdx].getUsageExamples();
-        txaMeaning.setText(temp[0]);
-		for (i = 1; i < temp.length; i++)
+		if (temp.length >= 1)
 		{
-			txaMeaning.append("\n" + temp[i]);
-		}
+			txaMeaning.setText(temp[0]);
+			for (i = 1; i < temp.length; i++)
+			{
+				txaMeaning.append("\n" + temp[i]);
+			}
 			txaMeaning.setEditable(false);
+		}
         txaMeaning.validate();
     }
 
@@ -460,11 +483,11 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
         leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    new JScrollPane(lstMeanings),
                                    scroRelatedWords);
-        leftSplit.setDividerLocation(0.2);
+        
         rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                      new JScrollPane(grpWordNet),
                                      new JScrollPane(txaMeaning));
-        rightSplit.setDividerLocation(0.8);        
+              
 
         downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                    leftSplit,
@@ -473,16 +496,12 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
                                  pnlInput,
                                  pnlProp);
         upSplit.setDividerSize(0);
-        downSplit.setDividerLocation(0.2);
+        
         
         baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    upSplit,
                                    downSplit);
         baseSplit.setDividerSize(0);
-        getContentPane().add(baseSplit);
-			
-	
-        
-    }
-	
+        getContentPane().add(baseSplit);			     
+    }	
 }       
