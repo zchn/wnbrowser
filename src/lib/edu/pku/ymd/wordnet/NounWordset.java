@@ -1,7 +1,8 @@
 package edu.pku.ymd.wordnet;
 
-public interface NounSynset extends Synset
+class NounWordset extends Wordset implements NounSynset
 {
+    
     WordSense[] getAntonyms(String wordForm);
     //Returns the antonyms (words with the opposite meaning), if any, associated with a word form in this synset.
     AdjectiveSynset[] getAttributes();
