@@ -34,130 +34,133 @@ public class MainWindow extends JFrame
     JTextField txtWord;//输入框
     JButton btnSearch,btnNoun,btnVerb,btnAdj,btnAdv;//搜索按钮和四个词性按钮
     JList lstMeanings;//显示意思的list
-    JScrollPane scroRelatedWords;//显示相关词scroll
+	JScrollPane scroRelatedWords;//显示相关词scroll
     JGraph grpWordNet;//网络图
-    JGraphModelAdapter grpAdapter;
-    ListenableGraph grptWordNet;
     JTextArea txaMeaning;//下边显示具体意思的TextArea
     WordNetDatabase dbWordNet;
     String currWord;//输入的单词
     Synset[] currSynset;//当前单词Synset型
     SynsetType currProp;
     int currMeaningIdx;//索引
-    DefaultMutableTreeNode root;
-    JTree tree;
+	DefaultMutableTreeNode root;
+	JTree tree;
+	JSplitPane baseSplit, upSplit, downSplit;
+	JSplitPane leftSplit, rightSplit;
 
 
     public MainWindow()//构造函数
     {
         InitWordnetDB();
-        setBounds(0,0,1280,1024);
-        InitWindowFrame();
+		setBounds(0,0,1280,1024);
+	    InitWindowFrame();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        validate();
+	    validate();
         setVisible(true);
     }
-
+	
     private void InitWordnetDB() 
     {
         System.setProperty(WORDNET_DATABASE_DIR_TAG,
-                           "."
-                           + File.separator + "dict");
+                            "."
+                            + File.separator + "dict");
         dbWordNet = WordNetDatabase.getFileInstance();
     }
 
-    private class SearchBtnHandler implements ActionListener//btnSearch按钮的监视器
+private class SearchBtnHandler implements ActionListener//btnSearch按钮的监视器
     {
         public void actionPerformed( ActionEvent e)
         {
-            currWord = txtWord.getText();
-            txaMeaning.validate();
-            currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
-            currProp = SynsetType.NOUN;
+				currWord = txtWord.getText();
+				txaMeaning.validate();
+				currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
+				currProp = SynsetType.NOUN;
 				
-            currMeaningIdx = 0;
-            UpdateMeanings();
-            UpdateRelatedWords();
-            UpdateMeaning();          
+				currMeaningIdx = 0;
+				UpdateMeanings();
+				UpdateRelatedWords();
+				UpdateMeaning();          
         }
     }
 
-    private class EnterHandler implements ActionListener//txtWord按钮的监视器
-    { 
-        public void actionPerformed(ActionEvent e) 
-        { 
-            currWord = txtWord.getText();
-            txaMeaning.setText(currWord);
-            txaMeaning.validate();
-            //初始都显示NOUN。的相关内容
-            currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
-            currProp = SynsetType.NOUN;
-            currMeaningIdx = 0;
-            UpdateMeanings();
-            UpdateRelatedWords();
-            UpdateMeaning();         
-        }
-    } 
+private class EnterHandler implements ActionListener//txtWord按钮的监视器
+{ 
+		public void actionPerformed(ActionEvent e) 
+		{ 
+				currWord = txtWord.getText();
+				txaMeaning.setText(currWord);
+				txaMeaning.validate();
+				//初始都显示NOUN。的相关内容
+				currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
+				currProp = SynsetType.NOUN;
+				currMeaningIdx = 0;
+				UpdateMeanings();
+				UpdateRelatedWords();
+				//System.out.println(root);
+				//root.removeAllChildren();
+				
+				UpdateMeaning();         
+		}
+	} 
 
-    private class btnNounHandler implements ActionListener//btnNoun按钮的监视器
-    {
-        public void actionPerformed( ActionEvent e)
+private class btnNounHandler implements ActionListener//btnNoun按钮的监视器
+	{
+	    public void actionPerformed( ActionEvent e)
         {
-            currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
-            currProp = SynsetType.NOUN;
-            UpdateMeanings();
-            UpdateRelatedWords();
-            UpdateMeaning();
-        }
-    }
-    
-    private class btnVerbHandler implements ActionListener//btnVerb按钮的监视器
-    {
-        public void actionPerformed( ActionEvent e)
+			currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
+			currProp = SynsetType.NOUN;
+			UpdateMeanings();
+			UpdateRelatedWords();
+			UpdateMeaning();
+		}
+	}
+
+private class btnVerbHandler implements ActionListener//btnVerb按钮的监视器
+	{
+		public void actionPerformed( ActionEvent e)
         {
-            currSynset = dbWordNet.getSynsets(currWord, SynsetType.VERB);
-            currProp = SynsetType.VERB;
-            UpdateMeanings();
-            UpdateRelatedWords();
-            UpdateMeaning();
-        }
-    }
+			currSynset = dbWordNet.getSynsets(currWord, SynsetType.VERB);
+			currProp = SynsetType.VERB;
+			UpdateMeanings();
+			UpdateRelatedWords();
+			UpdateMeaning();
+		}
+	}
 
 
-    private class btnAdjHandler implements ActionListener//btnAdj按钮的监视器
-    {
-        public void actionPerformed( ActionEvent e)
+private class btnAdjHandler implements ActionListener//btnAdj按钮的监视器
+	{
+		public void actionPerformed( ActionEvent e)
         {
-            currSynset = dbWordNet.getSynsets(currWord, SynsetType.ADJECTIVE);
-            currProp = SynsetType.ADJECTIVE;
-            UpdateMeanings();
-            UpdateRelatedWords();
-            UpdateMeaning();
-        }
-    }
+			currSynset = dbWordNet.getSynsets(currWord, SynsetType.ADJECTIVE);
+			currProp = SynsetType.ADJECTIVE;
+			UpdateMeanings();
+			UpdateRelatedWords();
+			UpdateMeaning();
+		}
+	}
 
-    private class btnAdvHandler implements ActionListener//btnAdb按钮的监视器
-    {
-        public void actionPerformed( ActionEvent e)
+private class btnAdvHandler implements ActionListener//btnAdb按钮的监视器
+	{
+		public void actionPerformed( ActionEvent e)
         {
-            currSynset = dbWordNet.getSynsets(currWord, SynsetType.ADVERB);
-            currProp = SynsetType.ADVERB;
-            UpdateMeanings();
-            UpdateRelatedWords();
-            UpdateMeaning();
-        }
-    }
+			currSynset = dbWordNet.getSynsets(currWord, SynsetType.ADVERB);
+			currProp = SynsetType.ADVERB;
+			UpdateMeanings();
+			UpdateRelatedWords();
+			UpdateMeaning();
+		}
+	}
 
 
-    private class ListHandler implements ListSelectionListener//lstMeanings的监视器
-    {
-        public void valueChanged(ListSelectionEvent e) 
+private class ListHandler implements ListSelectionListener//lstMeanings的监视器
+	{
+		public void valueChanged(ListSelectionEvent e) 
 
-        {
-            currMeaningIdx=lstMeanings.getSelectedIndex();
-            UpdateMeaning();
-        }
-    }
+		{
+			currMeaningIdx=lstMeanings.getSelectedIndex();
+			UpdateMeaning();
+		}
+	}
 
     
     
@@ -174,183 +177,284 @@ public class MainWindow extends JFrame
 
     private void UpdateRelatedWords()//更新lstRelatedWords
     {
-        int j,i;
-        Synset nowSynset;
-        nowSynset = currSynset[currMeaningIdx];
-        WordSense[] wsAntonyms;
-        NounSynset[] nsHypernyms, nsHyponyms;
-        VerbSynset[] vsHypernyms;
-        currProp=nowSynset.getType();
-        String[] strSynonymy;
-                            
-        root.removeAllChildren();
-        //make a JTree
-        root.setUserObject(currWord);
-                                    
-        if (currProp==SynsetType.NOUN)
-            {
-                DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
-                DefaultMutableTreeNode hypernyms = new DefaultMutableTreeNode("Hypernyms");
-                DefaultMutableTreeNode hyponyms = new DefaultMutableTreeNode("Hyponyms");
-                strSynonymy = nowSynset.getWordForms();
-                //synonymy
-                synonymy.removeAllChildren();
-                for (i = 0; i < strSynonymy.length; i++)
-                    {
-                        System.out.println(strSynonymy[i]);
-                        synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
-                    }
-                //hypernyms
-                hypernyms.removeAllChildren();
-                nsHypernyms = ((NounSynset)nowSynset).getHypernyms();
-                for (i = 0; i < nsHypernyms.length; i++)
-                    {
-                        String[] temp;
-                        temp = nsHypernyms[i].getWordForms();
-                        for (j = 0; j < temp.length; j++)
-                            {
-                                hypernyms.add(new DefaultMutableTreeNode(temp[j]));
-                            }
-                    }
-                //hyponyms
-                hyponyms.removeAllChildren();
-                nsHyponyms = ((NounSynset)nowSynset).getHyponyms();
-                for (i = 0; i < nsHyponyms.length; i++)
-                    {
-                        String[] temp;
-                        temp = nsHyponyms[i].getWordForms();
-                        for (j = 0; j < temp.length; j++)
-                            {
-                                hyponyms.add(new DefaultMutableTreeNode(temp[j]));
-                            }
-                    }
-                root.add(synonymy);
-                root.add(hypernyms);
-                root.add(hyponyms);
-                                                                                                        
-            }
-                                        
-        if (currProp == SynsetType.VERB)
-            {
-                DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
-                DefaultMutableTreeNode antonyms = new DefaultMutableTreeNode("Antonyms");
-                DefaultMutableTreeNode hypernyms = new DefaultMutableTreeNode("Hypernyms");
-                strSynonymy = nowSynset.getWordForms();
-                //synonymy
-                synonymy.removeAllChildren();
-                for (i = 0; i < strSynonymy.length; i++)
-                    {
-                        System.out.println(strSynonymy[i]);
-                        synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
-                    }
-                //antonyms
-                antonyms.removeAllChildren();
-                wsAntonyms = ((VerbSynset)nowSynset).getAntonyms(currWord);
-                Synset temp;
-                for (i = 0; i < wsAntonyms.length; i++)
-                    {
-                        temp = wsAntonyms[i].getSynset();
-                        String[] temp2;
-                        temp2 = temp.getWordForms();
-                        for (j = 0; j < temp2.length; j++)
-                            {
-                                antonyms.add(new DefaultMutableTreeNode(temp2[j]));
-                            }
-                    }
-                //hypernyms
-                hypernyms.removeAllChildren();
-                vsHypernyms = ((VerbSynset)nowSynset).getHypernyms();
-                for (i = 0; i < vsHypernyms.length; i++)
-                    {
-                        String[] temp3;
-                        temp3 = vsHypernyms[i].getWordForms();
-                        for (j = 0; j < temp3.length; j++)
-                            {
-                                hypernyms.add(new DefaultMutableTreeNode(temp3[j]));
-                            }
-                    }
-                root.add(synonymy);
-                root.add(antonyms);
-                root.add(hypernyms);
-            }
-        scroRelatedWords.repaint();
-		
+		try
+		{
+			int j, i;
+			Synset nowSynset;
+			nowSynset = currSynset[currMeaningIdx];
+			WordSense[] wsAntonyms, wsPertainyms;
+			NounSynset[] nsHypernyms, nsHyponyms, nsAttributes;
+			VerbSynset[] vsHypernyms;
+			currProp = nowSynset.getType();
+			String[] strSynonymy;
+			//make a JTree
+			root.setUserObject(currWord);
+			root.removeAllChildren();
+			if (currProp == SynsetType.NOUN)
+			{
+				DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
+				DefaultMutableTreeNode hypernyms = new DefaultMutableTreeNode("Hypernyms");
+				DefaultMutableTreeNode hyponyms = new DefaultMutableTreeNode("Hyponyms");
+				strSynonymy = nowSynset.getWordForms();
+				//synonymy
+				synonymy.removeAllChildren();
+				for (i = 0; i < strSynonymy.length; i++)
+				{
+					//System.out.println(strSynonymy[i]);
+					synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
+				}
+				//hypernyms
+				hypernyms.removeAllChildren();
+				nsHypernyms = ((NounSynset)nowSynset).getHypernyms();
+				for (i = 0; i < nsHypernyms.length; i++)
+				{
+					String[] temp;
+					temp = nsHypernyms[i].getWordForms();
+					for (j = 0; j < temp.length; j++)
+					{
+						hypernyms.add(new DefaultMutableTreeNode(temp[j]));
+					}
+				}
+				//hyponyms
+				hyponyms.removeAllChildren();
+				nsHyponyms = ((NounSynset)nowSynset).getHyponyms();
+				for (i = 0; i < nsHyponyms.length; i++)
+				{
+					String[] temp;
+					temp = nsHyponyms[i].getWordForms();
+					for (j = 0; j < temp.length; j++)
+					{
+						hyponyms.add(new DefaultMutableTreeNode(temp[j]));
+					}
+				}
+				root.add(synonymy);
+				root.add(hypernyms);
+				root.add(hyponyms);
+
+			}
+
+			if (currProp == SynsetType.VERB)
+			{
+				DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
+				DefaultMutableTreeNode antonyms = new DefaultMutableTreeNode("Antonyms");
+				DefaultMutableTreeNode hypernyms = new DefaultMutableTreeNode("Hypernyms");
+				strSynonymy = nowSynset.getWordForms();
+				//synonymy
+				synonymy.removeAllChildren();
+				for (i = 0; i < strSynonymy.length; i++)
+				{
+					//		System.out.println(strSynonymy[i]);
+					synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
+				}
+				//antonyms
+				antonyms.removeAllChildren();
+				wsAntonyms = ((VerbSynset)nowSynset).getAntonyms(currWord);
+				Synset temp;
+				for (i = 0; i < wsAntonyms.length; i++)
+				{
+					temp = wsAntonyms[i].getSynset();
+					String[] temp2;
+					temp2 = temp.getWordForms();
+					for (j = 0; j < temp2.length; j++)
+					{
+						antonyms.add(new DefaultMutableTreeNode(temp2[j]));
+					}
+				}
+				//hypernyms
+				hypernyms.removeAllChildren();
+				vsHypernyms = ((VerbSynset)nowSynset).getHypernyms();
+				for (i = 0; i < vsHypernyms.length; i++)
+				{
+					String[] temp3;
+					temp3 = vsHypernyms[i].getWordForms();
+					for (j = 0; j < temp3.length; j++)
+					{
+						hypernyms.add(new DefaultMutableTreeNode(temp3[j]));
+					}
+				}
+				root.add(synonymy);
+				root.add(antonyms);
+				root.add(hypernyms);
+			}
+
+			if (currProp == SynsetType.ADJECTIVE)
+			{
+				DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
+				DefaultMutableTreeNode antonyms = new DefaultMutableTreeNode("Antonyms");
+				DefaultMutableTreeNode attributes = new DefaultMutableTreeNode("Attributes (from which nouns)");
+				strSynonymy = nowSynset.getWordForms();
+				//synonymy
+				synonymy.removeAllChildren();
+				for (i = 0; i < strSynonymy.length; i++)
+				{
+					//System.out.println(strSynonymy[i]);
+					synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
+				}
+				//antonyms
+				antonyms.removeAllChildren();
+				wsAntonyms = ((AdjectiveSynset)nowSynset).getAntonyms(currWord);
+				Synset temp;
+				for (i = 0; i < wsAntonyms.length; i++)
+				{
+					temp = wsAntonyms[i].getSynset();
+					String[] temp2;
+					temp2 = temp.getWordForms();
+					for (j = 0; j < temp2.length; j++)
+					{
+						antonyms.add(new DefaultMutableTreeNode(temp2[j]));
+					}
+				}
+				//attributes
+				attributes.removeAllChildren();
+				nsAttributes = ((AdjectiveSynset)nowSynset).getAttributes();
+				for (i = 0; i < nsAttributes.length; i++)
+				{
+					String[] temp4;
+					temp4 = nsAttributes[i].getWordForms();
+					for (j = 0; j < temp4.length; j++)
+					{
+						attributes.add(new DefaultMutableTreeNode(temp4[j]));
+					}
+				}
+				root.add(synonymy);
+				root.add(antonyms);
+				root.add(attributes);
+			}
+			if (currProp == SynsetType.ADVERB)
+			{
+				DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
+				DefaultMutableTreeNode antonyms = new DefaultMutableTreeNode("Antonyms ");
+				DefaultMutableTreeNode pertainyms = new DefaultMutableTreeNode("Pertainyms (from which adjectives)");
+				strSynonymy = nowSynset.getWordForms();
+				//synonymy
+				synonymy.removeAllChildren();
+				for (i = 0; i < strSynonymy.length; i++)
+				{
+					//System.out.println(strSynonymy[i]);
+					synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
+				}
+				//antonyms
+				antonyms.removeAllChildren();
+				wsAntonyms = ((AdverbSynset)nowSynset).getAntonyms(currWord);
+				Synset temp;
+				for (i = 0; i < wsAntonyms.length; i++)
+				{
+					temp = wsAntonyms[i].getSynset();
+					String[] temp2;
+					temp2 = temp.getWordForms();
+					for (j = 0; j < temp2.length; j++)
+					{
+						antonyms.add(new DefaultMutableTreeNode(temp2[j]));
+					}
+				}
+				//pertainyms
+				pertainyms.removeAllChildren();
+				wsPertainyms = ((AdverbSynset)nowSynset).getPertainyms(currWord);
+				Synset temp5;
+				for (i = 0; i < wsPertainyms.length; i++)
+				{
+					temp5 = wsPertainyms[i].getSynset();
+					String[] temp6;
+					temp6 = temp5.getWordForms();
+					for (j = 0; j < temp6.length; j++)
+					{
+						pertainyms.add(new DefaultMutableTreeNode(temp6[j]));
+					}
+				}
+				root.add(synonymy);
+				root.add(antonyms);
+				root.add(pertainyms);
+			}
+			scroRelatedWords.validate();
+			scroRelatedWords.repaint();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
 
     }
     private void UpdateMeaning()//更新txaMeaning
     {
-        txaMeaning.setText(currSynset[currMeaningIdx].getDefinition());
-        txaMeaning.setEditable(false);
+		int i;
+		String[] temp;
+		temp = currSynset[currMeaningIdx].getUsageExamples();
+        txaMeaning.setText(temp[0]);
+		for (i = 1; i < temp.length; i++)
+		{
+			txaMeaning.append("\n" + temp[i]);
+		}
+			txaMeaning.setEditable(false);
         txaMeaning.validate();
     }
 
     private void InitWindowFrame()
         
     {
-        txtWord = new JTextField(WORDWIDTH);
-        
-        btnSearch = new JButton("Search");
-        btnNoun = new JButton("Noun.");
-        btnVerb = new JButton("Verb.");
-        btnAdj = new JButton("Adj.");
-        btnAdv = new JButton("Adv.");
 
-        String[] tmp1 = {"Here","Shows","the","meanings","^_^"};
-        String[] tmp2 = {"Here","Shows","related","words","^_^"};
-        
-        lstMeanings = new JList(tmp1);
-        grpWordNet = new JGraph();
-        txaMeaning = new JTextArea("Here shows the detail meaning and other");
-        txaMeaning.setEditable(false);
+		txtWord = new JTextField(WORDWIDTH);
 
-        JSplitPane baseSplit,upSplit,downSplit;
-        JSplitPane leftSplit,rightSplit;
-        JPanel pnlInput = new JPanel();
-        JPanel pnlProp = new JPanel();
+		btnSearch = new JButton("Search");
+		btnNoun = new JButton("Noun.");
+		btnVerb = new JButton("Verb.");
+		btnAdj = new JButton("Adj.");
+		btnAdv = new JButton("Adv.");
 
-        //添加监视器
-        txtWord.addActionListener(new EnterHandler());
-        btnSearch.addActionListener(new SearchBtnHandler());        
-        btnNoun.addActionListener(new btnNounHandler());
-        btnVerb.addActionListener(new btnVerbHandler());
-        btnAdj.addActionListener(new btnAdjHandler());
-        btnAdv.addActionListener(new btnAdvHandler());
-        lstMeanings.addListSelectionListener(new ListHandler());
-        lstMeanings.addMouseListener(new MouseAdapter()
-            {
-                private long clickTime;
-                public void mouseReleased(MouseEvent me)
-                {
-                    if (checkClickTime())
-                        {
-                            UpdateRelatedWords();
-                                                                 
-                        }
-                }
-                public boolean checkClickTime()
-                {
-                    long nowTime = (new Date()).getTime();
-                    if (nowTime - clickTime < 300)
-                        {
-                            clickTime = nowTime;
-                            return true;
-                        }
-                    clickTime = nowTime;
-                    return false;
-                }
-            });
+		String[] tmp1 = { "Here", "Shows", "the", "meanings", "^_^" };
+		String[] tmp2 = { "Here", "Shows", "related", "words", "^_^" };
 
-				
-        pnlInput.add(txtWord);
-        pnlInput.add(btnSearch);
-        pnlProp.add(btnNoun);
-        pnlProp.add(btnVerb);
-        pnlProp.add(btnAdj);
-        pnlProp.add(btnAdv);
-                    
-        root = new DefaultMutableTreeNode("curWord");
-        tree = new JTree(root);
-        scroRelatedWords = new JScrollPane(tree);
+		lstMeanings = new JList(tmp1);
+		grpWordNet = new JGraph();
+		txaMeaning = new JTextArea("Here shows the detail meaning and other");
+		txaMeaning.setEditable(false);
+
+		
+		JPanel pnlInput = new JPanel();
+		JPanel pnlProp = new JPanel();
+
+		//添加监视器
+		txtWord.addActionListener(new EnterHandler());
+		btnSearch.addActionListener(new SearchBtnHandler());        
+		btnNoun.addActionListener(new btnNounHandler());
+		btnVerb.addActionListener(new btnVerbHandler());
+		btnAdj.addActionListener(new btnAdjHandler());
+		btnAdv.addActionListener(new btnAdvHandler());
+		lstMeanings.addListSelectionListener(new ListHandler());
+		lstMeanings.addMouseListener(new MouseAdapter()
+		{
+			private long clickTime;
+			public void mouseReleased(MouseEvent me)
+			{
+				if (checkClickTime())
+				{
+					UpdateRelatedWords();
+
+				}
+			}
+			public boolean checkClickTime()
+			{
+				long nowTime = (new Date()).getTime();
+				if (nowTime - clickTime < 300)
+				{
+					clickTime = nowTime;
+					return true;
+				}
+				clickTime = nowTime;
+				return false;
+			}
+		});
+
+		pnlInput.add(txtWord);
+		pnlInput.add(btnSearch);
+		pnlProp.add(btnNoun);
+		pnlProp.add(btnVerb);
+		pnlProp.add(btnAdj);
+		pnlProp.add(btnAdv);
+
+		
+		root = new DefaultMutableTreeNode("curWord");
+		tree = new JTree(root);
+		scroRelatedWords = new JScrollPane(tree);
 	
 		
         leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -358,14 +462,10 @@ public class MainWindow extends JFrame
                                    scroRelatedWords);
         leftSplit.setDividerLocation(0.2);
         rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                                    new JScrollPane(grpWordNet),
-                                    new JScrollPane(txaMeaning));
-        rightSplit.setDividerLocation(0.8);
-        grptWordNet = new ListenableDirectedGraph(DefaultEdge.class);//添加Jgraph和Jgrapht       
-        grpAdapter = new JGraphModelAdapter(grptWordNet);//添加适配器
-        
+                                     new JScrollPane(grpWordNet),
+                                     new JScrollPane(txaMeaning));
+        rightSplit.setDividerLocation(0.8);        
 
-        
         downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                    leftSplit,
                                    rightSplit);
@@ -380,12 +480,9 @@ public class MainWindow extends JFrame
                                    downSplit);
         baseSplit.setDividerSize(0);
         getContentPane().add(baseSplit);
+			
+	
         
     }
-   
-    void updateJGraph()
-    {
-        
-    }
-
+	
 }       
