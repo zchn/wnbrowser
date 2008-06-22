@@ -1,6 +1,6 @@
 package edu.pku.ymd.wordnet;
 
-interface Synset
+interface InnerSynset
 {
     String getDefinition();
     SynsetType getType();
