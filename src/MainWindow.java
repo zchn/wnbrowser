@@ -8,6 +8,7 @@ import javax.swing.event.*;
 import java.awt.geom.Rectangle2D;
 
 import java.io.File;
+import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,10 +43,10 @@ public class MainWindow extends JFrame
     public MainWindow()//构造函数
     {
         InitWordnetDB();
-        InitWindowFrame();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
-        pack();
-        validate();
+		setBounds(0,0,1280,1024);
+	    InitWindowFrame();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    validate();
         setVisible(true);
     }
 
@@ -173,6 +174,7 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
     private void UpdateMeaning()//更新txaMeaning
     {
         txaMeaning.setText(currSynset[currMeaningIdx].getDefinition());
+		txaMeaning.setEditable(false);
         txaMeaning.validate();
     }
 
@@ -194,6 +196,7 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
         lstRelatedWords = new JList(tmp2);
         grpWordNet = new JGraph();
         txaMeaning = new JTextArea("Here shows the detail meaning and other");
+		txaMeaning.setEditable(false);
 
         JSplitPane baseSplit,upSplit,downSplit;
         JSplitPane leftSplit,rightSplit;
@@ -208,7 +211,31 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
 		btnAdj.addActionListener(new btnAdjHandler());
 		btnAdv.addActionListener(new btnAdvHandler());
 		lstMeanings.addListSelectionListener(new ListHandler());
+		lstMeanings.addMouseListener(new MouseAdapter()
+		{
+			private long clickTime;
+			public void mouseReleased(MouseEvent me)
+			{
+				if (checkClickTime())
+				{
+					UpdateRelatedWords();
 
+				}
+			}
+			public boolean checkClickTime()
+			{
+				long nowTime = (new Date()).getTime();
+				if (nowTime - clickTime < 300)
+				{
+					clickTime = nowTime;
+					return true;
+				}
+				clickTime = nowTime;
+				return false;
+			}
+		});
+
+				
 		pnlInput.add(txtWord);
         pnlInput.add(btnSearch);
         pnlProp.add(btnNoun);
@@ -219,7 +246,7 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
         leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    new JScrollPane(lstMeanings),
                                    new JScrollPane(lstRelatedWords));
-        leftSplit.setDividerLocation(0.5);
+        leftSplit.setDividerLocation(0.2);
         rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                      new JScrollPane(grpWordNet),
                                      new JScrollPane(txaMeaning));
@@ -232,7 +259,7 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
                                  pnlInput,
                                  pnlProp);
         upSplit.setDividerSize(0);
-        downSplit.setDividerLocation(0.4);
+        downSplit.setDividerLocation(0.2);
         
         baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    upSplit,
