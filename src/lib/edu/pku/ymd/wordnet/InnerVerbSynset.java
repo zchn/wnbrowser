@@ -1,6 +1,6 @@
 package edu.pku.ymd.wordnet;
 
-interface VerbSynset extends Synset
+interface InnerVerbSynset extends InnerSynset
 {
     WordPair[] getAntonyms();
     WordPair[] getDerivationallyRelatedForms();

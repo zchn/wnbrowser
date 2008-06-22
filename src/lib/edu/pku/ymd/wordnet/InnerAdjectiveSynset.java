@@ -1,6 +1,6 @@
 package edu.pku.ymd.wordnet;
 
-interface AdjectiveSynset extends Synset
+interface InnerAdjectiveSynset extends InnerSynset
 {
     WordPair[] getAntonyms();
     WordPair[] getAttributes();
