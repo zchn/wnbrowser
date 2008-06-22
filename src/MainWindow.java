@@ -4,6 +4,7 @@ import javax.swing.*;
 import org.jgraph.*;
 import org.jgrapht.*;
 import javax.swing.event.*;
+import javax.swing.tree.*;
 
 import java.awt.geom.Rectangle2D;
 
@@ -23,6 +24,8 @@ import org.jgrapht.graph.ListenableDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 
+
+
 public class MainWindow extends JFrame
 {
     private static final int WORDWIDTH=30;
@@ -31,7 +34,7 @@ public class MainWindow extends JFrame
     JTextField txtWord;//输入框
     JButton btnSearch,btnNoun,btnVerb,btnAdj,btnAdv;//搜索按钮和四个词性按钮
     JList lstMeanings;//显示意思的list
-	JList lstRelatedWords;//显示相关词的list
+	JScrollPane scroRelatedWords;//显示相关词scroll
     JGraph grpWordNet;//网络图
     JTextArea txaMeaning;//下边显示具体意思的TextArea
     WordNetDatabase dbWordNet;
@@ -39,6 +42,8 @@ public class MainWindow extends JFrame
     Synset[] currSynset;//当前单词Synset型
     SynsetType currProp;
     int currMeaningIdx;//索引
+	DefaultMutableTreeNode root;
+	JTree tree;
 
     public MainWindow()//构造函数
     {
@@ -166,10 +171,63 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
 
     private void UpdateRelatedWords()//更新lstRelatedWords
     {
-        String[] relatedWordList;
-        relatedWordList = currSynset[currMeaningIdx].getWordForms();
-        lstRelatedWords.setListData(relatedWordList);
-        lstRelatedWords.validate();
+		int j,i;
+		Synset nowSynset;
+		nowSynset = currSynset[currMeaningIdx];
+		NounSynset[] nsHypernyms, nsHyponyms;
+		currProp=nowSynset.getType();
+		String[] strSynonymy;
+  
+		root.removeAllChildren();
+		//make a JTree
+		root.setUserObject(currWord);
+
+		if (currProp==SynsetType.NOUN)
+		{
+			DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
+			DefaultMutableTreeNode hypernyms = new DefaultMutableTreeNode("Hypernyms");
+			DefaultMutableTreeNode hyponyms = new DefaultMutableTreeNode("Hyponyms");
+			strSynonymy = nowSynset.getWordForms();
+			//synonymy
+			synonymy.removeAllChildren();
+			for (i = 0; i < strSynonymy.length; i++)
+			{
+				System.out.println(strSynonymy[i]);
+				synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
+			}
+			//hypernyms
+			hypernyms.removeAllChildren();
+			nsHypernyms = ((NounSynset)nowSynset).getHypernyms();
+			for (i = 0; i < nsHypernyms.length; i++)
+			{
+				String[] temp;
+				temp = nsHypernyms[i].getWordForms();
+				for (j = 0; j < temp.length; j++)
+				{
+					hypernyms.add(new DefaultMutableTreeNode(temp[j]));
+				}
+			}
+			//hyponyms
+			hyponyms.removeAllChildren();
+			nsHyponyms = ((NounSynset)nowSynset).getHyponyms();
+			for (i = 0; i < nsHyponyms.length; i++)
+			{
+				String[] temp;
+				temp = nsHyponyms[i].getWordForms();
+				for (j = 0; j < temp.length; j++)
+				{
+					hyponyms.add(new DefaultMutableTreeNode(temp[j]));
+				}
+			}
+			root.add(synonymy);
+			root.add(hypernyms);
+			root.add(hyponyms);
+
+		}
+		if
+		scroRelatedWords.repaint();
+		
+
     }
     private void UpdateMeaning()//更新txaMeaning
     {
@@ -193,7 +251,6 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
         String[] tmp2 = {"Here","Shows","related","words","^_^"};
         
         lstMeanings = new JList(tmp1);
-        lstRelatedWords = new JList(tmp2);
         grpWordNet = new JGraph();
         txaMeaning = new JTextArea("Here shows the detail meaning and other");
 		txaMeaning.setEditable(false);
@@ -242,10 +299,15 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
         pnlProp.add(btnVerb);
         pnlProp.add(btnAdj);
         pnlProp.add(btnAdv);
+
+		root = new DefaultMutableTreeNode("curWord");
+		tree = new JTree(root);
+		scroRelatedWords = new JScrollPane(tree);
+	
 		
         leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    new JScrollPane(lstMeanings),
-                                   new JScrollPane(lstRelatedWords));
+                                   scroRelatedWords);
         leftSplit.setDividerLocation(0.2);
         rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                      new JScrollPane(grpWordNet),
