@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.*;
 import javax.swing.*;
 import org.jgraph.*;
@@ -48,7 +49,7 @@ public class MainWindow extends JFrame
     JTree tree;
     JSplitPane baseSplit, upSplit, downSplit;
     JSplitPane leftSplit, rightSplit;
-    
+    List<Object> graphVertices;
     
 
     public MainWindow()//构造函数
@@ -60,7 +61,105 @@ public class MainWindow extends JFrame
         validate();
         setVisible(true);
     }
+
+    private void InitWindowFrame()        
+    {
+
+        txtWord = new JTextField(WORDWIDTH);
+
+        btnSearch = new JButton("Search");
+        btnNoun = new JButton("Noun.");
+        btnVerb = new JButton("Verb.");
+        btnAdj = new JButton("Adj.");
+        btnAdv = new JButton("Adv.");
+
+        String[] tmp1 = { "Here", "Shows", "the", "meanings", "^_^" };
+        String[] tmp2 = { "Here", "Shows", "related", "words", "^_^" };
+
+        lstMeanings = new JList(tmp1);
+
+        grptWordNet = new ListenableDirectedGraph(DefaultEdge.class);//添加Jgraph和Jgrapht       
+        grpAdapter = new JGraphModelAdapter(grptWordNet);//添加适配器        
+        grpWordNet = new JGraph(grpAdapter);
+        graphVertices = new ArrayList();
+        
+        txaMeaning = new JTextArea("Here shows the detail meaning and other");
+        txaMeaning.setEditable(false);
+
+		
+        JPanel pnlInput = new JPanel();
+        JPanel pnlProp = new JPanel();
+
+        //添加监视器
+        txtWord.addActionListener(new EnterHandler());
+        btnSearch.addActionListener(new SearchBtnHandler());        
+        btnNoun.addActionListener(new btnNounHandler());
+        btnVerb.addActionListener(new btnVerbHandler());
+        btnAdj.addActionListener(new btnAdjHandler());
+        btnAdv.addActionListener(new btnAdvHandler());
+        lstMeanings.addListSelectionListener(new ListHandler());
+        lstMeanings.addMouseListener(new MouseAdapter()
+            {
+                private long clickTime;
+                public void mouseReleased(MouseEvent me)
+                {
+                    if (checkClickTime())
+                        {
+                            UpdateRelatedWords();
+                            UpdateJGraph();
+                        }
+                }
+                public boolean checkClickTime()
+                {
+                    long nowTime = (new Date()).getTime();
+                    if (nowTime - clickTime < 300)
+                        {
+                            clickTime = nowTime;
+                            return true;
+                        }
+                    clickTime = nowTime;
+                    return false;
+                }
+            });
+
+        pnlInput.add(txtWord);
+        pnlInput.add(btnSearch);
+        pnlProp.add(btnNoun);
+        pnlProp.add(btnVerb);
+        pnlProp.add(btnAdj);
+        pnlProp.add(btnAdv);
+
+		
+        root = new DefaultMutableTreeNode("curWord");
+        tree = new JTree(root);
+        scroRelatedWords = new JScrollPane(tree);
 	
+		
+        leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                                   new JScrollPane(lstMeanings),
+                                   scroRelatedWords);
+        
+        rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                                    new JScrollPane(grpWordNet),
+                                    new JScrollPane(txaMeaning));
+              
+
+        downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                                   leftSplit,
+                                   rightSplit);
+        upSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                                 pnlInput,
+                                 pnlProp);
+        upSplit.setDividerSize(0);
+        
+        
+        baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+                                   upSplit,
+                                   downSplit);
+        baseSplit.setDividerSize(0);
+        getContentPane().add(baseSplit);			     
+    }
+
     private void InitWordnetDB() 
     {
         System.setProperty(WORDNET_DATABASE_DIR_TAG,
@@ -133,7 +232,6 @@ public class MainWindow extends JFrame
         }
     }
 
-
     private class btnAdjHandler implements ActionListener//btnAdj按钮的监视器
     {
         public void actionPerformed( ActionEvent e)
@@ -160,15 +258,12 @@ public class MainWindow extends JFrame
         }
     }
 
-
     private class ListHandler implements ListSelectionListener//lstMeanings的监视器
     {
         public void valueChanged(ListSelectionEvent e) 
-
         {
             currMeaningIdx=lstMeanings.getSelectedIndex();
             UpdateMeaning();
-            UpdateJGraph();
         }
     }
 
@@ -404,6 +499,7 @@ public class MainWindow extends JFrame
             }
 
     }
+
     private void UpdateMeaning()//更新txaMeaning
     {
         int i;
@@ -421,108 +517,17 @@ public class MainWindow extends JFrame
         txaMeaning.validate();
     }
 
-    private void InitWindowFrame()
-        
+    private void UpdateJGraph()
     {
-
-        txtWord = new JTextField(WORDWIDTH);
-
-        btnSearch = new JButton("Search");
-        btnNoun = new JButton("Noun.");
-        btnVerb = new JButton("Verb.");
-        btnAdj = new JButton("Adj.");
-        btnAdv = new JButton("Adv.");
-
-        String[] tmp1 = { "Here", "Shows", "the", "meanings", "^_^" };
-        String[] tmp2 = { "Here", "Shows", "related", "words", "^_^" };
-
-        lstMeanings = new JList(tmp1);
-
-        grptWordNet = new ListenableDirectedGraph(DefaultEdge.class);//添加Jgraph和Jgrapht       
-        grpAdapter = new JGraphModelAdapter(grptWordNet);//添加适配器        
-        grpWordNet = new JGraph(grpAdapter);
-
-        txaMeaning = new JTextArea("Here shows the detail meaning and other");
-        txaMeaning.setEditable(false);
-
-		
-        JPanel pnlInput = new JPanel();
-        JPanel pnlProp = new JPanel();
-
-        //添加监视器
-        txtWord.addActionListener(new EnterHandler());
-        btnSearch.addActionListener(new SearchBtnHandler());        
-        btnNoun.addActionListener(new btnNounHandler());
-        btnVerb.addActionListener(new btnVerbHandler());
-        btnAdj.addActionListener(new btnAdjHandler());
-        btnAdv.addActionListener(new btnAdvHandler());
-        lstMeanings.addListSelectionListener(new ListHandler());
-        lstMeanings.addMouseListener(new MouseAdapter()
+        int k;
+        for( k = 0; k < graphVertices.size(); k++)
             {
-                private long clickTime;
-                public void mouseReleased(MouseEvent me)
-                {
-                    if (checkClickTime())
-                        {
-                            UpdateRelatedWords();
-
-                        }
-                }
-                public boolean checkClickTime()
-                {
-                    long nowTime = (new Date()).getTime();
-                    if (nowTime - clickTime < 300)
-                        {
-                            clickTime = nowTime;
-                            return true;
-                        }
-                    clickTime = nowTime;
-                    return false;
-                }
-            });
-
-        pnlInput.add(txtWord);
-        pnlInput.add(btnSearch);
-        pnlProp.add(btnNoun);
-        pnlProp.add(btnVerb);
-        pnlProp.add(btnAdj);
-        pnlProp.add(btnAdv);
-
-		
-        root = new DefaultMutableTreeNode("curWord");
-        tree = new JTree(root);
-        scroRelatedWords = new JScrollPane(tree);
-	
-		
-        leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                                   new JScrollPane(lstMeanings),
-                                   scroRelatedWords);
+                grptWordNet.removeVertex(graphVertices.get(k));
+            }
+        graphVertices.clear();
         
-        rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                                    new JScrollPane(grpWordNet),
-                                    new JScrollPane(txaMeaning));
-              
-
-        downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                   leftSplit,
-                                   rightSplit);
-        upSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                                 pnlInput,
-                                 pnlProp);
-        upSplit.setDividerSize(0);
-        
-        
-        baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                                   upSplit,
-                                   downSplit);
-        baseSplit.setDividerSize(0);
-        getContentPane().add(baseSplit);			     
-    }
-
-    void UpdateJGraph()
-    {
-        //grptWordNet.removeAllVertices(grptWordNet.vertexSet());        
         grptWordNet.addVertex(currWord);
+        graphVertices.add(currWord);
 
         int j,i;
         Synset nowSynset;
@@ -536,22 +541,25 @@ public class MainWindow extends JFrame
         
         if (currProp==SynsetType.NOUN)
             {
-                strSynonymy = nowSynset.getWordForms().clone();
+                strSynonymy = nowSynset.getWordForms();
                 //synonymy
                 for (i = 0; i < strSynonymy.length; i++)                    
                     {
                         if(strSynonymy[i] == currWord){
                             continue;
                         }
-                        grptWordNet.addVertex(strSynonymy[i]);
-                        grptWordNet.addEdge(currWord,strSynonymy[i]);
-                        setVertexColor(strSynonymy[i],Color.red);                        
-                        positionVertexAt(strSynonymy[i],200,100+i*100);
+                        String tmp = new String(strSynonymy[i]);
+                        grptWordNet.addVertex(tmp);
+                        graphVertices.add(tmp);
+                        grptWordNet.addEdge(currWord,tmp);
+                        setVertexColor(tmp,Color.red);                        
+                        positionVertexAt(tmp,200,100+i*100);
                     }
                 centerY = 200+i*100;
                 positionVertexAt(currWord,200,centerY);
                 //hypernyms
-                nsHypernyms = ((NounSynset)nowSynset).getHypernyms();                
+                nsHypernyms = ((NounSynset)nowSynset).getHypernyms();
+                int partBase = 0;
                 for (i = 0; i < nsHypernyms.length; i++)
                     {
                         String[] temp;
@@ -561,13 +569,17 @@ public class MainWindow extends JFrame
                                 if(temp[j] == currWord){
                                     continue;
                                 }
-                                grptWordNet.addVertex(temp[j]);
-                                grptWordNet.addEdge(currWord,temp[j]);
-                                setVertexColor(temp[j],Color.blue);
-                                positionVertexAt(temp[j],50,centerY-100+j*100);
+                                String tmp = new String(temp[j]);
+                                grptWordNet.addVertex(tmp);
+                                graphVertices.add(tmp);
+                                grptWordNet.addEdge(currWord,tmp);
+                                setVertexColor(tmp,Color.blue);
+                                positionVertexAt(tmp,50,centerY-100+partBase+j*100);
                             }
+                        partBase += j*100;
                     }
                 //hyponyms
+                partBase = 0;
                 nsHyponyms = ((NounSynset)nowSynset).getHyponyms();
                 for (i = 0; i < nsHyponyms.length; i++)
                     {
@@ -578,11 +590,14 @@ public class MainWindow extends JFrame
                                 if(temp[j] == currWord){
                                     continue;
                                 }
-                                grptWordNet.addVertex(temp[j]);
-                                grptWordNet.addEdge(currWord,temp[j]);
-                                setVertexColor(temp[j],Color.green);                                
-                                positionVertexAt(temp[j],400,100+j*100);
+                                String tmp = new String(temp[j]);                                
+                                grptWordNet.addVertex(tmp);
+                                graphVertices.add(tmp);
+                                grptWordNet.addEdge(currWord,tmp);
+                                setVertexColor(tmp,Color.green);                                
+                                positionVertexAt(tmp,400+i/2*200,100+j*100+partBase*(i%2));
                             }
+                        partBase = j*100;
                     }
             }        
         else if (currProp == SynsetType.VERB)
@@ -630,22 +645,21 @@ public class MainWindow extends JFrame
                     }
             }
         
-        grpWordNet.repaint();
+        this.validate();
     }
 
     private void positionVertexAt( Object vertex, int x, int y ) {
-        DefaultGraphCell cell = grpAdapter.getVertexCell( vertex );
-        AttributeMap attr = cell.getAttributes(  );
-        Rectangle2D.Double b = (Rectangle2D.Double) GraphConstants.getBounds( attr );
-        GraphConstants.setBounds( attr, new Rectangle( x, y, (int)b.width, (int)b.height ) );
-        cell.setAttributes(new AttributeMap(attr));
+        DefaultGraphCell cell = grpAdapter.getVertexCell(vertex);
+        AttributeMap attr = cell.getAttributes();
+        GraphConstants.setBounds( attr, new Rectangle( x, y, 100, 30 ) );
+        cell.setAttributes(attr);
     }
 
     private void setVertexColor( Object vertex, Color color ) {
         DefaultGraphCell cell = grpAdapter.getVertexCell(vertex);        
         AttributeMap attr = cell.getAttributes();
         GraphConstants.setBackground(attr, color);
-        cell.setAttributes(new AttributeMap(attr));
+        cell.setAttributes(attr);
     }
 
 
