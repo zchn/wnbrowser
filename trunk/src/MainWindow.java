@@ -174,6 +174,7 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
 		int j,i;
 		Synset nowSynset;
 		nowSynset = currSynset[currMeaningIdx];
+		WordSense[] wsAntonyms;
 		NounSynset[] nsHypernyms, nsHyponyms;
 		currProp=nowSynset.getType();
 		String[] strSynonymy;
@@ -224,7 +225,29 @@ private class ListHandler implements ListSelectionListener//lstMeanings的监视器
 			root.add(hyponyms);
 
 		}
-		if
+
+		if (currProp == SynsetType.VERB)
+		{
+			DefaultMutableTreeNode synonymy = new DefaultMutableTreeNode("Synonymy");
+			DefaultMutableTreeNode antonyms = new DefaultMutableTreeNode("Antonyms");
+			DefaultMutableTreeNode hypernyms = new DefaultMutableTreeNode("Hypernyms");
+			strSynonymy = nowSynset.getWordForms();
+			//synonymy
+			synonymy.removeAllChildren();
+			for (i = 0; i < strSynonymy.length; i++)
+			{
+				System.out.println(strSynonymy[i]);
+				synonymy.add(new DefaultMutableTreeNode(strSynonymy[i]));
+			}
+			//antonyms
+			antonyms.removeAllChildren();
+
+			
+		
+			root.add(synonymy);
+			root.add(antonyms);
+			root.add(hypernyms);
+		}
 		scroRelatedWords.repaint();
 		
 
