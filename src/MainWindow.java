@@ -32,19 +32,19 @@ public class MainWindow extends JFrame
     private static final int WORDWIDTH=30;
     private static final String WORDNET_DATABASE_DIR_TAG = "wordnet.database.dir";
     
-    JTextField txtWord;//ÊäÈë¿ò
-    JButton btnSearch,btnNoun,btnVerb,btnAdj,btnAdv;//ËÑË÷°´Å¥ºÍËÄ¸ö´ÊĞÔ°´Å¥
-    JList lstMeanings;//ÏÔÊ¾ÒâË¼µÄlist
-    JScrollPane scroRelatedWords;//ÏÔÊ¾Ïà¹Ø´Êscroll
-    JGraph grpWordNet;//ÍøÂçÍ¼
+    JTextField txtWord;//è¾“å…¥æ¡†
+    JButton btnSearch,btnNoun,btnVerb,btnAdj,btnAdv;//æœç´¢æŒ‰é’®å’Œå››ä¸ªè¯æ€§æŒ‰é’®
+    JList lstMeanings;//æ˜¾ç¤ºæ„æ€çš„list
+    JScrollPane scroRelatedWords;//æ˜¾ç¤ºç›¸å…³è¯scroll
+    JGraph grpWordNet;//ç½‘ç»œå›¾
     JGraphModelAdapter grpAdapter;
     ListenableGraph grptWordNet;    
-    JTextArea txaMeaning;//ÏÂ±ßÏÔÊ¾¾ßÌåÒâË¼µÄTextArea
+    JTextArea txaMeaning;//ä¸‹è¾¹æ˜¾ç¤ºå…·ä½“æ„æ€çš„TextArea
     WordNetDatabase dbWordNet;
-    String currWord;//ÊäÈëµÄµ¥´Ê
-    Synset[] currSynset;//µ±Ç°µ¥´ÊSynsetĞÍ
+    String currWord;//è¾“å…¥çš„å•è¯
+    Synset[] currSynset;//å½“å‰å•è¯Synsetå‹
     SynsetType currProp;
-    int currMeaningIdx;//Ë÷Òı
+    int currMeaningIdx;//ç´¢å¼•
     DefaultMutableTreeNode root;
     JTree tree;
     JSplitPane baseSplit, upSplit, downSplit;
@@ -52,7 +52,7 @@ public class MainWindow extends JFrame
     List<Object> graphVertices;
     
 
-    public MainWindow()//¹¹Ôìº¯Êı
+    public MainWindow()//æ„é€ å‡½æ•°
     {
         InitWordnetDB();
         setBounds(0,0,1280,1024);
@@ -80,8 +80,8 @@ public class MainWindow extends JFrame
 
         lstMeanings = new JList(tmp1);
 
-        grptWordNet = new ListenableDirectedGraph(DefaultEdge.class);//Ìí¼ÓJgraphºÍJgrapht       
-        grpAdapter = new JGraphModelAdapter(grptWordNet);//Ìí¼ÓÊÊÅäÆ÷        
+        grptWordNet = new ListenableDirectedGraph(DefaultEdge.class);//æ·»åŠ Jgraphå’ŒJgrapht       
+        grpAdapter = new JGraphModelAdapter(grptWordNet);//æ·»åŠ é€‚é…å™¨        
         grpWordNet = new JGraph(grpAdapter);
         graphVertices = new ArrayList();
         
@@ -92,7 +92,7 @@ public class MainWindow extends JFrame
         JPanel pnlInput = new JPanel();
         JPanel pnlProp = new JPanel();
 
-        //Ìí¼Ó¼àÊÓÆ÷
+        //æ·»åŠ ç›‘è§†å™¨
         txtWord.addActionListener(new EnterHandler());
         btnSearch.addActionListener(new SearchBtnHandler());        
         btnNoun.addActionListener(new btnNounHandler());
@@ -173,7 +173,7 @@ public class MainWindow extends JFrame
         dbWordNet = WordNetDatabase.getFileInstance();
     }
 
-    private class SearchBtnHandler implements ActionListener//btnSearch°´Å¥µÄ¼àÊÓÆ÷
+    private class SearchBtnHandler implements ActionListener//btnSearchæŒ‰é’®çš„ç›‘è§†å™¨
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -190,14 +190,14 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class EnterHandler implements ActionListener//txtWord°´Å¥µÄ¼àÊÓÆ÷
+    private class EnterHandler implements ActionListener//txtWordæŒ‰é’®çš„ç›‘è§†å™¨
     { 
         public void actionPerformed(ActionEvent e) 
         { 
             currWord = txtWord.getText();
             txaMeaning.setText(currWord);
             txaMeaning.validate();
-            //³õÊ¼¶¼ÏÔÊ¾NOUN¡£µÄÏà¹ØÄÚÈİ
+            //åˆå§‹éƒ½æ˜¾ç¤ºNOUNã€‚çš„ç›¸å…³å†…å®¹
             currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
             currProp = SynsetType.NOUN;
             currMeaningIdx = 0;
@@ -208,7 +208,7 @@ public class MainWindow extends JFrame
         }
     } 
 
-    private class btnNounHandler implements ActionListener//btnNoun°´Å¥µÄ¼àÊÓÆ÷
+    private class btnNounHandler implements ActionListener//btnNounæŒ‰é’®çš„ç›‘è§†å™¨
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -221,7 +221,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class btnVerbHandler implements ActionListener//btnVerb°´Å¥µÄ¼àÊÓÆ÷
+    private class btnVerbHandler implements ActionListener//btnVerbæŒ‰é’®çš„ç›‘è§†å™¨
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -234,7 +234,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class btnAdjHandler implements ActionListener//btnAdj°´Å¥µÄ¼àÊÓÆ÷
+    private class btnAdjHandler implements ActionListener//btnAdjæŒ‰é’®çš„ç›‘è§†å™¨
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -247,7 +247,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class btnAdvHandler implements ActionListener//btnAdb°´Å¥µÄ¼àÊÓÆ÷
+    private class btnAdvHandler implements ActionListener//btnAdbæŒ‰é’®çš„ç›‘è§†å™¨
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -260,7 +260,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class ListHandler implements ListSelectionListener//lstMeaningsµÄ¼àÊÓÆ÷
+    private class ListHandler implements ListSelectionListener//lstMeaningsçš„ç›‘è§†å™¨
     {
         public void valueChanged(ListSelectionEvent e) 
         {
@@ -271,7 +271,7 @@ public class MainWindow extends JFrame
 
     
     
-    private void UpdateMeanings()//¸üĞÂlstMeanings
+    private void UpdateMeanings()//æ›´æ–°lstMeanings
     {
         int i;
         String[] meaningsList = new String[currSynset.length];
@@ -282,7 +282,7 @@ public class MainWindow extends JFrame
         lstMeanings.validate();
     }
 
-    private void UpdateRelatedWords()//¸üĞÂlstRelatedWords
+    private void UpdateRelatedWords()//æ›´æ–°lstRelatedWords
     {
         try
             {
@@ -521,7 +521,7 @@ public class MainWindow extends JFrame
 							currWord = txtWord.getText();
 							txaMeaning.setText(currWord);
 							txaMeaning.validate();
-							//³õÊ¼¶¼ÏÔÊ¾NOUN¡£µÄÏà¹ØÄÚÈİ
+							//åˆå§‹éƒ½æ˜¾ç¤ºNOUNã€‚çš„ç›¸å…³å†…å®¹
 							currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
 							currProp = SynsetType.NOUN;
 
@@ -548,7 +548,7 @@ public class MainWindow extends JFrame
 		}
 	}
 
-    private void UpdateMeaning()//¸üĞÂtxaMeaning
+    private void UpdateMeaning()//æ›´æ–°txaMeaning
     {
         int i;
         String[] temp;
@@ -651,6 +651,7 @@ public class MainWindow extends JFrame
             }        
         else if (currProp == SynsetType.VERB)
             {
+
                 strSynonymy = nowSynset.getWordForms();
                 //synonymy
                 for (i = 0; i < strSynonymy.length; i++)
@@ -663,9 +664,9 @@ public class MainWindow extends JFrame
                         graphVertices.add(tmp);
                         grptWordNet.addEdge(currWord,tmp);
                         setVertexColor(tmp,Color.red);
-                        positionVertexAt(tmp,200,100+i*20);
+                        positionVertexAt(tmp,200,100+i*100);
                     }
-                centerY = 100+i*20;
+                centerY = 100+i*100;
                 positionVertexAt(currWord,200,centerY);
                 //antonyms
                 wsAntonyms = ((VerbSynset)nowSynset).getAntonyms(currWord);
@@ -682,10 +683,11 @@ public class MainWindow extends JFrame
                                 graphVertices.add(tmp);
                                 grptWordNet.addEdge(currWord,tmp);
                                 setVertexColor(tmp,Color.yellow);                                
-                                positionVertexAt(tmp,200,centerY+50+j*20);
+                                positionVertexAt(tmp,200+i*100,centerY+50+j*100);
                             }
                     }
                 //hypernyms
+                int partBase = 0;
                 vsHypernyms = ((VerbSynset)nowSynset).getHypernyms();
                 for (i = 0; i < vsHypernyms.length; i++)
                     {
@@ -698,8 +700,9 @@ public class MainWindow extends JFrame
                                 graphVertices.add(tmp);                                
                                 grptWordNet.addEdge(currWord,tmp);
                                 setVertexColor(tmp,Color.blue);                                
-                                positionVertexAt(tmp,50,centerY-100+j*20);
+                                positionVertexAt(tmp,50,centerY-100+partBase+j*100);
                             }
+                        partBase += j*100;
                     }
             }
         else if (currProp == SynsetType.ADJECTIVE)
@@ -716,9 +719,9 @@ public class MainWindow extends JFrame
                         graphVertices.add(tmp);
                         grptWordNet.addEdge(currWord,tmp);
                         setVertexColor(tmp,Color.red);
-                        positionVertexAt(tmp,200,100+i*20);
+                        positionVertexAt(tmp,200,100+i*100);
                     }
-                centerY = 100+i*20;
+                centerY = 100+i*100;
                 //antonyms
                 wsAntonyms = ((AdjectiveSynset)nowSynset).getAntonyms(currWord);
                 Synset temp2;
@@ -734,7 +737,7 @@ public class MainWindow extends JFrame
                                 graphVertices.add(tmp);
                                 grptWordNet.addEdge(currWord,tmp);
                                 setVertexColor(tmp,Color.yellow); 
-                                positionVertexAt(tmp,200,centerY+50+j*20);
+                                positionVertexAt(tmp,200,centerY+50+j*100);
                             }
                     }
                 //attributes
@@ -750,7 +753,7 @@ public class MainWindow extends JFrame
                                 graphVertices.add(tmp);                                
                                 grptWordNet.addEdge(currWord,tmp);
                                 setVertexColor(tmp,Color.blue);                                
-                                positionVertexAt(tmp,50,centerY-100+j*20);
+                                positionVertexAt(tmp,50,centerY-100+j*100);
                             }
                     }
             }
@@ -812,7 +815,7 @@ public class MainWindow extends JFrame
                                 graphVertices.add(tmp);
                                 grptWordNet.addEdge(currWord,tmp);
                                 setVertexColor(tmp,Color.blue);
-                                positionVertexAt(tmp,50,centerY-100+partBase+j*100);                           
+                                positionVertexAt(tmp,250,centerY-100+partBase+j*100);
                             }
                         partBase += j*100;
                     }
@@ -820,6 +823,7 @@ public class MainWindow extends JFrame
         this.validate();
     }
 
+    //ä¿®æ”¹æŸä¸ªèŠ‚ç‚¹çš„ä½ç½®
     private void positionVertexAt( Object vertex, int x, int y ) {
         DefaultGraphCell cell = grpAdapter.getVertexCell(vertex);
         AttributeMap attr = cell.getAttributes();
@@ -827,6 +831,7 @@ public class MainWindow extends JFrame
         cell.setAttributes(attr);
     }
 
+    //ä¿®æ”¹æ¨¡ä¸ªèŠ‚ç‚¹çš„é¢œè‰²
     private void setVertexColor( Object vertex, Color color ) {
         DefaultGraphCell cell = grpAdapter.getVertexCell(vertex);        
         AttributeMap attr = cell.getAttributes();
@@ -836,5 +841,4 @@ public class MainWindow extends JFrame
 
 
 }       
-
 
