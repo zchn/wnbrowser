@@ -556,12 +556,16 @@ public class MainWindow extends JFrame
         txaMeaning.setText((currSynset[currMeaningIdx]).getDefinition());
         if (temp.length >= 1)
             {
-                txaMeaning.setText(temp[0]);
+                txaMeaning.setText(currSynset[currMeaningIdx].getDefinition()+"\n"+temp[0]);
                 for (i = 1; i < temp.length; i++)
                     {
                         txaMeaning.append("\n" + temp[i]);
                     }
                 txaMeaning.setEditable(false);
+            }
+        else
+            {
+                txaMeaning.setText(currSynset[currMeaningIdx].getDefinition());
             }
         txaMeaning.validate();
     }
