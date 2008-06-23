@@ -1,4 +1,4 @@
-This is XeTeXk, Version 3.141592-2.2-0.996-patch2 (Web2C 7.5.6) (format=xelatex 2008.5.13)  23 JUN 2008 20:20
+This is XeTeXk, Version 3.141592-2.2-0.996-patch2 (Web2C 7.5.6) (format=xelatex 2008.5.13)  23 JUN 2008 20:28
 entering extended mode
  %&-line parsing enabled.
 **article.tex
@@ -650,23 +650,23 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 29.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 29.
- (./article.toc)
+ (./article.toc [1
+
+])
 \tf@toc=\write4
 \openout4 = `article.toc'.
 
- [1
-
-] [2] [3] [4]
-[5]
+ [2] [3] [4]
+[5] [6]
 File: screenshot.jpg Graphic file (type QTm)
- <use  "screenshot.jpg" > [6] [7] [8] [9] [10] [11] [12] (./article.aux) ) 
+ <use  "screenshot.jpg" > [7] [8] [9] [10] [11] [12] [13] (./article.aux) ) 
 Here is how much of TeX's memory you used:
- 13146 strings out of 95785
- 226580 string characters out of 1190383
- 328362 words of memory out of 1500000
- 15974 multiletter control sequences out of 10000+50000
- 6946 words of font info for 50 fonts, out of 1200000 for 2000
+ 13148 strings out of 95785
+ 226661 string characters out of 1190383
+ 323362 words of memory out of 1500000
+ 15975 multiletter control sequences out of 10000+50000
+ 6954 words of font info for 51 fonts, out of 1200000 for 2000
  28 hyphenation exceptions out of 8191
- 47i,8n,97p,722b,1460s stack positions out of 5000i,500n,6000p,200000b,5000s
+ 47i,8n,97p,722b,1553s stack positions out of 5000i,500n,6000p,200000b,5000s
 
-Output written on article.pdf (12 pages).
+Output written on article.pdf (13 pages).
