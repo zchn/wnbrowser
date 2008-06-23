@@ -183,7 +183,7 @@ public class MainWindow extends JFrame
             UpdateMeanings();
             UpdateRelatedWords();
             UpdateMeaning();
-            UpdateJGraph();          
+                     
         }
     }
 
@@ -202,7 +202,7 @@ public class MainWindow extends JFrame
             UpdateMeanings();
             UpdateRelatedWords();
             UpdateMeaning();
-         //   UpdateJGraph();         
+               
         }
     } 
 
@@ -474,6 +474,9 @@ public class MainWindow extends JFrame
                         root.add(pertainyms);
                     }
                 tree = new JTree(root);
+
+				tree.addTreeSelectionListener(new TreeHandler());
+
                 scroRelatedWords = new JScrollPane(tree);
                 leftSplit.removeAll();
                 leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -504,6 +507,51 @@ public class MainWindow extends JFrame
             }
 
     }
+
+	private class TreeHandler implements TreeSelectionListener
+	{
+		public void valueChanged(TreeSelectionEvent e)
+		{
+			if (e.getSource() == tree)
+			{
+				tree.addMouseListener(new MouseAdapter()
+				{
+					private long clickTime;
+					public void mouseReleased(MouseEvent me)
+					{
+						if (checkClickTime())
+						{
+							DefaultMutableTreeNode node = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+							txtWord.setText((String)(node.getUserObject()));
+							currWord = txtWord.getText();
+							txaMeaning.setText(currWord);
+							txaMeaning.validate();
+							//初始都显示NOUN。的相关内容
+							currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
+							currProp = SynsetType.NOUN;
+
+							currMeaningIdx = 0;
+							UpdateMeanings();
+							UpdateRelatedWords();
+							UpdateMeaning();
+						}
+					}
+					public boolean checkClickTime()
+					{
+						long nowTime = (new Date()).getTime();
+						if (nowTime - clickTime < 300)
+						{
+							clickTime = nowTime;
+							return true;
+						}
+						clickTime = nowTime;
+						return false;
+					}
+				});
+			
+			}
+		}
+	}
 
     private void UpdateMeaning()//更新txaMeaning
     {
