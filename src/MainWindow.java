@@ -138,24 +138,26 @@ public class MainWindow extends JFrame
         leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    new JScrollPane(lstMeanings),
                                    scroRelatedWords);
-        
+		leftSplit.setDividerLocation(400);
         rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                     new JScrollPane(grpWordNet),
                                     new JScrollPane(txaMeaning));
-              
 
+		rightSplit.setDividerLocation(650);
         downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                    leftSplit,
                                    rightSplit);
+		downSplit.setDividerLocation(250);
         upSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                  pnlInput,
                                  pnlProp);
         upSplit.setDividerSize(0);
-        
+		
         
         baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    upSplit,
                                    downSplit);
+		baseSplit.setDividerLocation(150);
         baseSplit.setDividerSize(0);
         getContentPane().add(baseSplit);			     
     }
@@ -195,14 +197,12 @@ public class MainWindow extends JFrame
             //初始都显示NOUN。的相关内容
             currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
             currProp = SynsetType.NOUN;
-            currMeaningIdx = 0;
+            
+			currMeaningIdx = 0;
             UpdateMeanings();
             UpdateRelatedWords();
-            //System.out.println(root);
-            //root.removeAllChildren();
-				
             UpdateMeaning();
-            UpdateJGraph();         
+         //   UpdateJGraph();         
         }
     } 
 
@@ -264,6 +264,9 @@ public class MainWindow extends JFrame
         {
             currMeaningIdx=lstMeanings.getSelectedIndex();
             UpdateMeaning();
+			UpdateRelatedWords();
+			UpdateMeaning();
+			UpdateJGraph();
         }
     }
 
@@ -476,18 +479,20 @@ public class MainWindow extends JFrame
                 leftSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                            new JScrollPane(lstMeanings),
                                            scroRelatedWords);
+				leftSplit.setDividerLocation(400);
 		
                 downSplit.removeAll();
                 downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                            leftSplit,
                                            rightSplit);
-			
+				downSplit.setDividerLocation(250);
 
                 baseSplit.removeAll();
                 baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                            upSplit,
                                            downSplit);
                 baseSplit.setDividerSize(0);
+				baseSplit.setDividerLocation(150);
                 getContentPane().removeAll();
                 getContentPane().add(baseSplit);
                 baseSplit.validate();
@@ -505,10 +510,11 @@ public class MainWindow extends JFrame
         int i;
         String[] temp;
         temp = currSynset[currMeaningIdx].getUsageExamples();
+		txaMeaning.setText((currSynset[currMeaningIdx]).getDefinition());
         if (temp.length >= 1)
             {
-                txaMeaning.setText(temp[0]);
-                for (i = 1; i < temp.length; i++)
+                
+                for (i = 0; i < temp.length; i++)
                     {
                         txaMeaning.append("\n" + temp[i]);
                     }
