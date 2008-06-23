@@ -1,0 +1,9 @@
+\begin{thebibliography}{10}
+
+\bibitem{bib:taintcheck}
+Dawn~Song 中文测试James~Newsome.
+\newblock Dynamic taint analysis for automatic detection,analysis, and
+  signature generation of exploits on commodity software.
+\newblock In {\em NDSS}, 2005.
+
+\end{thebibliography}
