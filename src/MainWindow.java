@@ -143,7 +143,7 @@ public class MainWindow extends JFrame
                                     new JScrollPane(grpWordNet),
                                     new JScrollPane(txaMeaning));
 
-		rightSplit.setDividerLocation(650);
+		rightSplit.setDividerLocation(750);
         downSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                    leftSplit,
                                    rightSplit);
@@ -157,7 +157,7 @@ public class MainWindow extends JFrame
         baseSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                    upSplit,
                                    downSplit);
-		baseSplit.setDividerLocation(150);
+		baseSplit.setDividerLocation(80);
         baseSplit.setDividerSize(0);
         getContentPane().add(baseSplit);			     
     }
@@ -495,7 +495,7 @@ public class MainWindow extends JFrame
                                            upSplit,
                                            downSplit);
                 baseSplit.setDividerSize(0);
-				baseSplit.setDividerLocation(150);
+				baseSplit.setDividerLocation(80);
                 getContentPane().removeAll();
                 getContentPane().add(baseSplit);
                 baseSplit.validate();
