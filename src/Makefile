@@ -1,11 +1,11 @@
 
-all:jawsTest.class jgraphTest.class MainWindow.class Main.class
+all:Main.class
 
-jawsTest.class:jawsTest.java
-	javac -cp "./lib/jaws.jar" jawsTest.java
+#jawsTest.class:jawsTest.java
+#	javac -cp "./lib/jaws.jar" jawsTest.java
 
-jgraphTest.class:jgraphTest.java
-	javac -cp "./lib/jgraph.jar:./lib/jgrapht.jar" jgraphTest.java
+#jgraphTest.class:jgraphTest.java
+#	javac -cp "./lib/jgraph.jar:./lib/jgrapht.jar" jgraphTest.java
 
 Main.class:Main.java MainWindow.class
 	javac -cp "." Main.java
