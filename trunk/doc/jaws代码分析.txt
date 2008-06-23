@@ -1,4 +1,4 @@
-1、public abstract class WordNetDatabase内有类型为WordNetDatabase的变量
+﻿1、public abstract class WordNetDatabase内有类型为WordNetDatabase的变量
 fileInstance，fileInstance = new FileDataBase()。
 
 2、public class FileDatabase extends WordNetDatabase，构造函数什么也不做。

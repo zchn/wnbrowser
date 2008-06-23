@@ -1,4 +1,4 @@
-1.开始必须 import edu.smu.tspell.wordnet.*; 。事实上平时常用的一些函数
+﻿1.开始必须 import edu.smu.tspell.wordnet.*; 。事实上平时常用的一些函数
 也基本在这个包里，注意在编译和运行的时候classpath中加上 jaws.jar，具体
 可以看源码目录中我写的那个Makefile和googlecode网站咱们的项目那一页的
 source目录下的changes（实际上是每次svn的提交注释）的r11。
