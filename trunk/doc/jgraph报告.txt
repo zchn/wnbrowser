@@ -1,0 +1,41 @@
+声明：本报告所有资料由Y.M.D.团队的全体成员（金鑫、袁文清、张宁、陈志杰）共同查阅总结，我只是在此基础上稍加整理成文。
+
+JGraph是一个纯Java开发的图形组件,支持拖，放，缩放，合并等其它操作。它可以被结合到任何的Swing应用程序当中。它分为Free、Pro和Layout Pro版本，我们实际使用的是他的Free版本。
+
+JGraph的画图机制：
+   
+JGraph将图元定义为一个一个的cell，每个cell可以是一个顶点(Vertex)、边(Edge)或者节点(Port中的一种。顶点可以有邻接的顶点，他们通过边相联系，边联接的两个端点称为目标和源，每个目标或者源是一个节点。节点是顶点的孩子。每个cell都可以有自己的孩子。
+
+顶点(Vertex)对应的类为org.jgraph.graph.DefaultGraphCell 
+
+边(Edge)对应的类为org.jgraph.graph.DefaultEdge
+
+节点(Port)对应的类为org.jgraph.graph.DefaultPort
+
+
+每个cell的外观由相应的属性定义，属性序列是指一系列的键-值对，他们以Map形式组织（实际实现中使用的是AttributeMap），例如：
+
+
+    //修改某个节点的位置
+    private void positionVertexAt( Object vertex, int x, int y ) {
+        DefaultGraphCell cell = grpAdapter.getVertexCell(vertex);
+        AttributeMap attr = cell.getAttributes();
+        GraphConstants.setBounds( attr, new Rectangle( x, y, 100, 30 ) );
+        cell.setAttributes(attr);
+    }
+
+    //修改模个节点的颜色
+    private void setVertexColor( Object vertex, Color color ) {
+        DefaultGraphCell cell = grpAdapter.getVertexCell(vertex);        
+        AttributeMap attr = cell.getAttributes();
+        GraphConstants.setBackground(attr, color);
+        cell.setAttributes(attr);
+    }
+
+JGraph只是提供单纯的图形绘制功能，不包含实际的数据，所以要想办法把自己的数据“加”进去才行，这恐怕就得考虑扩展JGraph了，我们在参照比较了网上各种对于JGraph的抽象，最终确定使用一个名字为JGraphT的第三方组件。
+
+
+JGraph的扩展——JGraphT
+
+JGraphT是对于图数据的抽象，可以很方便的建立起各种有向图和无向图的逻辑结构，通过一个GraphAdapter可以实现与JGraph的对接，进而将逻辑的图结构借助JGraph显示出来。不过对于MVC中的V（View）和C（Control），即图的具体显示方式，节点位置、颜色之类的，还是要通过调用JGraph的方法来实现。如上个例子，即是先通过JGraphT中的方法获得某节点在JGraph中的对应对象后，再通过修改这个对应对象来达到改变颜色和位置的目的的。
+
