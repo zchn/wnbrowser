@@ -32,19 +32,19 @@ public class MainWindow extends JFrame
     private static final int WORDWIDTH=30;
     private static final String WORDNET_DATABASE_DIR_TAG = "wordnet.database.dir";
     
-    JTextField txtWord;//è¾“å…¥æ¡†
-    JButton btnSearch,btnNoun,btnVerb,btnAdj,btnAdv;//æœç´¢æŒ‰é’®å’Œå››ä¸ªè¯æ€§æŒ‰é’®
-    JList lstMeanings;//æ˜¾ç¤ºæ„æ€çš„list
-    JScrollPane scroRelatedWords;//æ˜¾ç¤ºç›¸å…³è¯scroll
-    JGraph grpWordNet;//ç½‘ç»œå›¾
+    JTextField txtWord;//ÊäÈë¿ò
+    JButton btnSearch,btnNoun,btnVerb,btnAdj,btnAdv;//ËÑË÷°´Å¥ºÍËÄ¸ö´ÊĞÔ°´Å¥
+    JList lstMeanings;//ÏÔÊ¾ÒâË¼µÄlist
+    JScrollPane scroRelatedWords;//ÏÔÊ¾Ïà¹Ø´Êscroll
+    JGraph grpWordNet;//ÍøÂçÍ¼
     JGraphModelAdapter grpAdapter;
     ListenableGraph grptWordNet;    
-    JTextArea txaMeaning;//ä¸‹è¾¹æ˜¾ç¤ºå…·ä½“æ„æ€çš„TextArea
+    JTextArea txaMeaning;//ÏÂ±ßÏÔÊ¾¾ßÌåÒâË¼µÄTextArea
     WordNetDatabase dbWordNet;
-    String currWord;//è¾“å…¥çš„å•è¯
-    Synset[] currSynset;//å½“å‰å•è¯Synsetå‹
+    String currWord;//ÊäÈëµÄµ¥´Ê
+    Synset[] currSynset;//µ±Ç°µ¥´ÊSynsetĞÍ
     SynsetType currProp;
-    int currMeaningIdx;//ç´¢å¼•
+    int currMeaningIdx;//Ë÷Òı
     DefaultMutableTreeNode root;
     JTree tree;
     JSplitPane baseSplit, upSplit, downSplit;
@@ -52,7 +52,7 @@ public class MainWindow extends JFrame
     List<Object> graphVertices;
     
 
-    public MainWindow()//æ„é€ å‡½æ•°
+    public MainWindow()//¹¹Ôìº¯Êı
     {
         InitWordnetDB();
         setBounds(0,0,1280,1024);
@@ -80,8 +80,8 @@ public class MainWindow extends JFrame
 
         lstMeanings = new JList(tmp1);
 
-        grptWordNet = new ListenableDirectedGraph(DefaultEdge.class);//æ·»åŠ Jgraphå’ŒJgrapht       
-        grpAdapter = new JGraphModelAdapter(grptWordNet);//æ·»åŠ é€‚é…å™¨        
+        grptWordNet = new ListenableDirectedGraph(DefaultEdge.class);//Ìí¼ÓJgraphºÍJgrapht       
+        grpAdapter = new JGraphModelAdapter(grptWordNet);//Ìí¼ÓÊÊÅäÆ÷        
         grpWordNet = new JGraph(grpAdapter);
         graphVertices = new ArrayList();
         
@@ -92,7 +92,7 @@ public class MainWindow extends JFrame
         JPanel pnlInput = new JPanel();
         JPanel pnlProp = new JPanel();
 
-        //æ·»åŠ ç›‘è§†å™¨
+        //Ìí¼Ó¼àÊÓÆ÷
         txtWord.addActionListener(new EnterHandler());
         btnSearch.addActionListener(new SearchBtnHandler());        
         btnNoun.addActionListener(new btnNounHandler());
@@ -173,7 +173,7 @@ public class MainWindow extends JFrame
         dbWordNet = WordNetDatabase.getFileInstance();
     }
 
-    private class SearchBtnHandler implements ActionListener//btnSearchæŒ‰é’®çš„ç›‘è§†å™¨
+    private class SearchBtnHandler implements ActionListener//btnSearch°´Å¥µÄ¼àÊÓÆ÷
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -190,14 +190,14 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class EnterHandler implements ActionListener//txtWordæŒ‰é’®çš„ç›‘è§†å™¨
+    private class EnterHandler implements ActionListener//txtWord°´Å¥µÄ¼àÊÓÆ÷
     { 
         public void actionPerformed(ActionEvent e) 
         { 
             currWord = txtWord.getText();
             txaMeaning.setText(currWord);
             txaMeaning.validate();
-            //åˆå§‹éƒ½æ˜¾ç¤ºNOUNã€‚çš„ç›¸å…³å†…å®¹
+            //³õÊ¼¶¼ÏÔÊ¾NOUN¡£µÄÏà¹ØÄÚÈİ
             currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
             currProp = SynsetType.NOUN;
             currMeaningIdx = 0;
@@ -208,7 +208,7 @@ public class MainWindow extends JFrame
         }
     } 
 
-    private class btnNounHandler implements ActionListener//btnNounæŒ‰é’®çš„ç›‘è§†å™¨
+    private class btnNounHandler implements ActionListener//btnNoun°´Å¥µÄ¼àÊÓÆ÷
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -221,7 +221,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class btnVerbHandler implements ActionListener//btnVerbæŒ‰é’®çš„ç›‘è§†å™¨
+    private class btnVerbHandler implements ActionListener//btnVerb°´Å¥µÄ¼àÊÓÆ÷
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -234,7 +234,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class btnAdjHandler implements ActionListener//btnAdjæŒ‰é’®çš„ç›‘è§†å™¨
+    private class btnAdjHandler implements ActionListener//btnAdj°´Å¥µÄ¼àÊÓÆ÷
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -247,7 +247,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class btnAdvHandler implements ActionListener//btnAdbæŒ‰é’®çš„ç›‘è§†å™¨
+    private class btnAdvHandler implements ActionListener//btnAdb°´Å¥µÄ¼àÊÓÆ÷
     {
         public void actionPerformed( ActionEvent e)
         {
@@ -260,7 +260,7 @@ public class MainWindow extends JFrame
         }
     }
 
-    private class ListHandler implements ListSelectionListener//lstMeaningsçš„ç›‘è§†å™¨
+    private class ListHandler implements ListSelectionListener//lstMeaningsµÄ¼àÊÓÆ÷
     {
         public void valueChanged(ListSelectionEvent e) 
         {
@@ -271,7 +271,7 @@ public class MainWindow extends JFrame
 
     
     
-    private void UpdateMeanings()//æ›´æ–°lstMeanings
+    private void UpdateMeanings()//¸üĞÂlstMeanings
     {
         int i;
         String[] meaningsList = new String[currSynset.length];
@@ -282,7 +282,7 @@ public class MainWindow extends JFrame
         lstMeanings.validate();
     }
 
-    private void UpdateRelatedWords()//æ›´æ–°lstRelatedWords
+    private void UpdateRelatedWords()//¸üĞÂlstRelatedWords
     {
         try
             {
@@ -521,7 +521,7 @@ public class MainWindow extends JFrame
 							currWord = txtWord.getText();
 							txaMeaning.setText(currWord);
 							txaMeaning.validate();
-							//åˆå§‹éƒ½æ˜¾ç¤ºNOUNã€‚çš„ç›¸å…³å†…å®¹
+							//³õÊ¼¶¼ÏÔÊ¾NOUN¡£µÄÏà¹ØÄÚÈİ
 							currSynset = dbWordNet.getSynsets(currWord, SynsetType.NOUN);
 							currProp = SynsetType.NOUN;
 
@@ -548,7 +548,7 @@ public class MainWindow extends JFrame
 		}
 	}
 
-    private void UpdateMeaning()//æ›´æ–°txaMeaning
+    private void UpdateMeaning()//¸üĞÂtxaMeaning
     {
         int i;
         String[] temp;
@@ -836,4 +836,5 @@ public class MainWindow extends JFrame
 
 
 }       
+
 
